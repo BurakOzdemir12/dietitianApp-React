@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@400;500;700&family=Poppins:wght@300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Kaisei+Tokumin:wght@400;500;700&family=Poppins:wght@300;400;500&family=Roboto+Slab:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Kaisei+Tokumin:wght@400;500;700&family=Poppins:wght@300;400;500&family=Roboto+Slab:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+:root {
+  --lg-font: "Kaisei Tokumin", serif; /* large fontlar için text family*/
+  --sm-font: "Poppins", sans-serif; /* small fontlar için text family (General Font) */
+  --pink: #e5345b; /* Sık kullanıcağımız rengi tanıttık */
+  --blanchedalmond: #ffebcd;
+  --LavenderBlush: #fff0f5;
+  --DarkSeaGreen: rgb(143, 188, 143);
+  --DarkSeaGreenOpacity: rgb(143, 188, 143, 1);
+  --Ivory: #fffff0;
+  --clr: rgba(254, 205, 165, 0.4);
+  --FloralWhite: #f7f4ee;
+  --about: rgb(252, 247, 225);
+  --seashell: rgba(255, 245, 238, 0.92);
+
+  --kaisei: "Kaisei Tokumin", serif;
+  --poppins-sansherif: "Poppins", sans-serif;
+  --robotoslab: "Roboto Slab", serif;
+  --dancingscript: "Dancing Script", cursive;
+  --Playfairdisplay: "Playfair Display", serif;
+  --lato: "Lato", sans-serif;
+}
+.about {
+  background-color: var(--seashell);
+  height: auto;
+  text-align: center;
+}
+.aboutHeader {
+  font-style: var(--poppins-sansherif);
+  letter-spacing: 0.15ch;
+  font-size: 28px;
+}
+.aboutText {
+  font-style: var(--dancingscript);
+  font-weight: 600;
+  letter-spacing: 0.2ch;
+  font-size: 22px;
+}
+.formField {
+  box-sizing: border-box;
+  
+}
+.inputs {
+  
+  height: 40px;
+  max-height: 55px;
+  min-width: 40%;
+  max-width: 100%;
+  background-color: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  padding: 0 10px;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+.submit{
+  height: 45px;
+  max-height: 55px;
+  min-width: 50%;
+  max-width: 40%;
+  letter-spacing: .2ch;
+  font-weight: 400;
+  font-size: 24px;
+  background-color: var(--DarkSeaGreen);
+}
+.submit:hover{
+  background-color: darkgreen;
+}
+.footerIcons {
+  font-size: 3ch;
+  cursor: pointer;
+}
+.footerIcons:hover {
+  color: var(--DarkSeaGreen);
+}
+
+ul {
+ 
+    justify-content: center;
+}
+@media (min-width: 993px) {
+}
