@@ -1,5 +1,5 @@
 {
-  "name": "diyetisyen-api",
+  "name": "my-project",
   "private": true,
   "version": "0.1.0",
   "description": "A Strapi application",
@@ -20,7 +20,7 @@
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "ef64a5aa-3447-4973-98e0-5e3632ff2294"
+    "uuid": "791a6e68-0122-44c1-846b-72141ec6d681"
   },
   "engines": {
     "node": ">=16.0.0 <=20.x.x",

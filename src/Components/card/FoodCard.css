@@ -1,0 +1,29 @@
+
+.food-title{
+    margin-top: .3rem;
+}
+.food-title{
+font-size: auto;
+font-weight: bolder;
+opacity: .8;
+}
+.food-image{
+   height: 15ch;
+    width: 22ch;
+   
+}
+
+
+@media(max-width:500px){
+    
+    .food-title{
+    font-size: large;
+    font-weight: bolder;
+    opacity: .8;
+    }
+    .food-image{
+        max-height: 13ch;
+        width: 15ch;
+       
+    }
+}

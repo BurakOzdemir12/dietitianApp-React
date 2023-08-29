@@ -1,0 +1,180 @@
+@import url("https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@400;500;700&family=Poppins:wght@300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Kaisei+Tokumin:wght@400;500;700&family=Poppins:wght@300;400;500&family=Roboto+Slab:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Kaisei+Tokumin:wght@400;500;700&family=Poppins:wght@300;400;500&family=Roboto+Slab:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&display=swap");
+
+:root {
+  --lg-font: "Kaisei Tokumin", serif; /* large fontlar için text family*/
+  --sm-font: "Poppins", sans-serif; /* small fontlar için text family (General Font) */
+  --pink: #e5345b; /* Sık kullanıcağımız rengi tanıttık */
+  --blanchedalmond: #ffebcd;
+  --LavenderBlush: #fff0f5;
+  --DarkSeaGreen: rgb(176, 201, 176);
+  --DarkSeaGreenOpacity: rgb(77, 206, 77);
+  --Ivory: #fffff0;
+  --clr: rgba(254, 205, 165, 0.4);
+  --FloralWhite: #f7f4ee;
+  --about: rgb(252, 247, 225);
+  --seashell: rgba(255, 245, 238, 0.92);
+  --color1: rgba(225, 199, 155, 0.3);
+  --greyTone1: #2c3e50;
+  --greyTone2: #bdc3c7;
+  --Raleway: "Raleway", sans-serif;
+  --kaisei: "Kaisei Tokumin", serif;
+  --poppins-sansherif: "Poppins", sans-serif;
+  --robotoslab: "Roboto Slab", serif;
+  --dancingscript: "Dancing Script", cursive;
+  --Playfairdisplay: "Playfair Display", serif;
+  --lato: "Lato", sans-serif;
+}
+body {
+  font-family: var(--Raleway);
+}
+.header {
+  text-align: start;
+  font-size: 2.125rem;
+  opacity: 0.8;
+  font-weight: 600;
+
+  font-stretch: normal;
+}
+.listItem {
+  list-style: none;
+  font-size: x-large;
+  font-weight: 600;
+  padding: 1 0 0 0 1rem;
+}
+.ul-l {
+ 
+  list-style-position: inside;
+  min-width: 60%;
+  background: white;
+  box-shadow: 0.25rem 0.25rem 0.75rem rgb(0 0 0 / 0.15);
+  padding: 0;
+  margin: .1rem;
+  border-radius:.0rem;
+}
+.searchArea {
+  /* border-style: groove; */
+  /* border-color: rgb(207, 207, 207); */
+  background-color: var(--greyTone2);
+  margin-top: 5%;
+  margin-left: 0%;
+  min-height: auto;
+  /* max-width: 80%; */
+}
+
+.InputArea {
+  font-size: larger;
+  border-radius: 0.9ch;
+  min-width: 60%;
+  text-align: center;
+  box-shadow: #e5345b;
+ 
+}
+.searchButton {
+  margin-left: 10px;
+}
+
+.searchButton:hover {
+  background-color: #18222c;
+}
+.SortArea {
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  min-width: 50%;
+}
+.faS {
+  font-size: x-large;
+  background-color: rgb(255, 255, 255);
+}
+.listItem:not(:last-child) {
+  border-bottom: 2px solid rgb(173, 216, 230);
+}
+
+.listItem:first-child {
+  margin-top: .3rem;
+}
+
+.listItem:last-child {
+  margin-bottom: .3rem;
+}
+
+.MostSearchProduct {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+.FoodName {
+  padding-left: 12ch;
+}
+.Product {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 13ch;
+}
+.Card {
+  max-width: 22ch;
+  min-width: 4ch;
+  text-align: center;
+  align-items: center;
+  display: inline-block;
+}
+.allFood-Categories-List {
+  margin-top: 10rem;
+}
+
+@media (min-width: 1200px) {
+  .allFood-Categories-List {
+    margin-left: 3ch;
+    margin-right: 3ch;
+    margin-top: 10rem;
+  }
+}
+@media (max-width: 623px) {
+  .InputArea {
+    min-width: 100%;
+  }
+  .ul-l {
+    width: auto;
+  }
+  .Card {
+    width: 20ch;
+  }
+}
+@media (max-width: 920) {
+  .InputArea {
+    background-color: rgb(255, 255, 255);
+
+    min-width: 30ch;
+  }
+  .ul-l {
+    width: auto;
+    margin-left: auto;
+  }
+}
+@media (max-width: 320px) {
+  .InputArea {
+    background-color: rgb(255, 255, 255);
+    min-width: 25ch;
+  }
+}
+@media (max-width: 381px) {
+  .Card {
+    width: 13ch;
+  }
+}
+@media (max-width: 341px) {
+  .faS {
+    display: none;
+  }
+  .searchButton {
+    margin-top: 1ch;
+  }
+}

@@ -30,6 +30,48 @@
     "kcal": {
       "type": "decimal",
       "required": true
+    },
+    "protein": {
+      "type": "decimal"
+    },
+    "fat": {
+      "type": "decimal"
+    },
+    "carb": {
+      "type": "decimal"
+    },
+    "fibr": {
+      "type": "decimal"
+    },
+    "colest": {
+      "type": "decimal"
+    },
+    "sodium": {
+      "type": "decimal"
+    },
+    "potass": {
+      "type": "decimal"
+    },
+    "calsium": {
+      "type": "decimal"
+    },
+    "vitA": {
+      "type": "decimal"
+    },
+    "vitC": {
+      "type": "decimal"
+    },
+    "iron": {
+      "type": "decimal"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "foods"
+    },
+    "details": {
+      "type": "json"
     }
   }
 }

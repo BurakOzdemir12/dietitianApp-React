@@ -1,0 +1,40 @@
+.CategoryCard {
+  border-radius: 0.9ch;
+  width: 30%;
+  text-align: center;
+}
+.categoryImage {
+  width: 60%;
+  border-radius: 2ch;
+}
+.title {
+  font-weight: 600;
+  color: rgba(88, 152, 248, 0.829);
+  margin-top: 4%;
+}
+@media (min-width: 1200px) {
+  .CategoryCard {
+    width: 15%;
+    text-align: center;
+    justify-items: center;
+}
+.categoryImage {
+    width: 100ch;
+  
+  }
+}
+@media (max-width: 767px) {
+    .allFood-Categories-List{
+        margin-left: 3ch;
+        margin-right: 3ch;
+    }
+    .CategoryCard {
+        min-width: 50%;
+        text-align: center;
+        justify-items: center;
+    }
+    .categoryImage {
+        min-width: 95%;
+      
+      }
+}

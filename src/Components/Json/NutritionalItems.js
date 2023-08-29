@@ -80,14 +80,7 @@ export const products = [
   //   category: "asdasd",
   // },
 ];
-export const option=[
 
-  {valu: 100, text: 'Gr' },
-  {valu: 50, text: 'Porsion'},
-  {valu: 30, text: 'Cup'},
-  {valu: 10, text: 'test '},
-
-];
 export const facts=[
   
     {name:"Calorie"},

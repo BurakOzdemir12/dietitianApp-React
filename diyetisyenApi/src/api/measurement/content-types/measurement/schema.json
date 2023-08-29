@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "measurements",
+  "info": {
+    "singularName": "measurement",
+    "pluralName": "measurements",
+    "displayName": "measurement"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "gram": {
+      "type": "string"
+    },
+    "cup": {
+      "type": "string"
+    }
+  }
+}

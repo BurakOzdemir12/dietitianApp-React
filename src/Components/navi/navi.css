@@ -1,0 +1,162 @@
+@import url("https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@400;500;700&family=Poppins:wght@300;400;500&display=swap");
+:root {
+  --lg-font: "Kaisei Tokumin", serif; /* large fontlar için text family*/
+  --sm-font: "Poppins", sans-serif; /* small fontlar için text family (General Font) */
+  --pink: #e5345b; /* Sık kullanıcağımız rengi tanıttık */
+  --blanchedalmond: #ffebcd;
+  --LavenderBlush: #fff0f5;
+  --DarkSeaGreen: #8fbc8f;
+}
+body {
+  padding: 0;
+  margin: 0;
+}
+.brand {
+}
+.navbar-toggler {
+  display: block;
+}
+.navv{
+  
+}
+.navlinks {
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  background-color: var(--blanchedalmond);
+ 
+}
+.navlink {
+  opacity: 0.65;
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  font-size: 3.3ch;
+  font-weight: 350;
+
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.navlink:hover {
+  color: #8fbc8f;
+}
+.navicons {
+  font-size: 3ch;
+  cursor: pointer;
+  color: white;
+}
+.navicons:hover {
+  color: var(--DarkSeaGreen);
+}
+.navbar {
+  max-width: 100%;
+  background-color: #ffffff;
+}
+
+@media screen and (min-width: 1200px) {
+ 
+  .navlink {
+    opacity: 0.9;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    font-size: 2.6ch;
+    
+  }
+  .navicons {
+    font-size: 3ch;
+    align-items: center;
+    align-content: center;
+  }
+  .brand {
+    max-width: 12%;
+    height: auto;
+  }
+}
+/* Scroll Animations - Events*/
+/* .scroll-up .navv {
+  color: rgb(255, 255, 255);
+  -webkit-box-shadow: 0 1px 9px 1px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 3px 5px 1px rgba(151, 142, 142, 0.2);
+}
+.scroll-down .navv {
+  background-color: white;
+  -webkit-box-shadow: 0 1px 9px 1px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 3px 5px 1px rgba(151, 142, 142, 0.2);
+}
+
+@media screen and (max-width: 1199px) {
+  .scrolled-up .navbar-collapse {
+    background-color: white;
+  }
+  .navbar-toggler {
+    background-color: white;
+  }
+
+  .scroll-down .navbar-toggler {
+    color: #8fbc8f;
+    border-color: rgb(0, 0, 0);
+  }
+  .scroll-up .navbar-toggler {
+    color: #8fbc8f;
+    border-color: rgb(0, 0, 0);
+  }
+
+  .scroll-up .navlink {
+    color: rgb(0, 0, 0);
+  }
+  .scroll-down .navlink {
+    color: rgb(0, 0, 0);
+  }
+  .scrolled-up .navlink {
+    color: rgb(0, 0, 0);
+  }
+}
+@media screen and (min-width: 1199px) {
+  .scrolled-up a {
+    color: white;
+    font-size: 4.5;
+  }
+  .scrolled-up .navicons {
+    color: white;
+    justify-content: center;
+  }
+  .scrolled-up .navicons:hover {
+    color: var(--DarkSeaGreen);
+  }
+  .scrolled-up .navlink {
+    color: white;
+  }
+  .scroll-up .navlink  {
+    color: rgb(0, 0, 0);
+  }
+  .scroll-down .navlink {
+    color: rgb(0, 0, 0);
+  }
+  .scrolled-up .navlink:hover {
+    color: var(--DarkSeaGreen);
+  }
+  .scroll-up .navlink:hover {
+    color: var(--DarkSeaGreen);
+  }
+  .scroll-down .navlink:hover {
+    color: var(--DarkSeaGreen);
+  }
+} */
+@media screen and (max-width: 320px) {
+  .brand {
+    max-width: 34%;
+    height: auto;
+  }
+}
+@media screen and (max-width: 420px) {
+  .brand {
+    max-width: 50%;
+    height: auto;
+  }
+}
+@media screen and (min-width: 920px) {
+  .brand {
+    max-width: 100%;
+    height: auto;
+  }
+}
