@@ -1,5 +1,6 @@
 import React from 'react'
-import useFetch from '../hooks/useFetch';
+import useFetch from "../../hooks/useFetch";
+
 import { Link } from 'react-router-dom';
 import "../../Pages/recipes/Recipes.css";
 const RecipiesCard = ({items}) => {

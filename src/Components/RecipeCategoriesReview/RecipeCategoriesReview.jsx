@@ -1,5 +1,5 @@
 import React from "react";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 import RecipiesCard from "../card/RecipiesCard";
 
 const RecipeCategoriesReview = ({ selected }) => {

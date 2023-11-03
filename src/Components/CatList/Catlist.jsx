@@ -1,5 +1,5 @@
 import React from "react";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 import { Link } from "react-router-dom";
 import { Card } from "reactstrap";
 import FoodCategoryCard from "../card/FoodCategoryCard";

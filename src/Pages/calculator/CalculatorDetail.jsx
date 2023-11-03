@@ -18,7 +18,7 @@ import {
 } from "chart.js/auto";
 import { Chart, Doughnut, Pie } from "react-chartjs-2";
 import a from "../../Components/Json/a.json";
-import useFetch from "../../Components/hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 ChartJs.register(Tooltip, Title, ArcElement, Legend);
 
 const Data = {

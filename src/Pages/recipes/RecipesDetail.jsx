@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 // import { Recipes } from "../../Components/Json/Recipes";
 import { Card, Col, Container, Row } from "reactstrap";
 import "../../Pages/recipes/recipeDetail2.css";
-import useFetch from "../../Components/hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 import {
   FaArrowAltCircleDown,
   FaArrowAltCircleLeft,

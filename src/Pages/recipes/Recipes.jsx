@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useFetch from "../../Components/hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 import {
   Col,
   Dropdown,

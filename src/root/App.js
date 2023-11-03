@@ -4,10 +4,8 @@ import Navi from "../Components/navi/Navi";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Calculator, { CalculatorAction } from "../Pages/calculator/Calculator";
-import Dietician from "../Pages/dieticianList/Dietician";
 import Home from "../Pages/home/Home";
 
-import CountUp from "react-countup";
 import Footer from "../Components/footer/Footer";
 import ScrollToTop from "../Components/scrollToTop/ScrollToTop";
 import ReloadScroll from "../Components/reloadScroll/ReloadScroll";
@@ -15,7 +13,6 @@ import ReloadScroll from "../Components/reloadScroll/ReloadScroll";
 import CalculatorDetail from "../Pages/calculator/CalculatorDetail";
 import RecipesDetail from "../Pages/recipes/RecipesDetail";
 
-import useFetch from "../Components/hooks/useFetch";
 // import Test from "../Pages/recipes/test";
 import Details from "../Pages/calculator/Details";
 import Recipes from "../Pages/recipes/Recipes";
