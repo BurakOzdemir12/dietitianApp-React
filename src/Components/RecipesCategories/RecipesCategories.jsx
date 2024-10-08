@@ -4,8 +4,7 @@ import { useParams } from "react-router-dom";
 import RecipeCategoriesReview from "../RecipeCategoriesReview/RecipeCategoriesReview";
 
 const RecipesCategories = () => {
-  const [selectedCheckboxes, setSelectedCheckBoxes] = useState([]);
-  const RecipeCatId = parseInt(useParams().id);
+  const [selectedCheckboxes, setSelectedCheckBoxes] = useState();
 
   const { data } = useFetch(
     "http://localhost:1337/api/recipe-categories?populate=*"

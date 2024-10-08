@@ -1,55 +1,30 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { fetchData } from "../services/apiServices";
 
-const useFetch = (url) => {
+const useFetch = (endpoint) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getData = async () => {
       try {
-        const res = await axios.get(url);
+        const res = await fetchData(endpoint);
         setLoading(false);
-        setData(res.data.data);
+        setData(res);
       } catch (err) {
+        setError(err);
+
         console.log(err);
+      } finally {
         setLoading(false);
       }
     };
-    fetchData();
-  }, [url]);
+    getData();
+  }, [endpoint]);
 
-  return { data, loading };
+  return { data, loading,error };
 };
 
 export default useFetch;
-
-// import axios from "axios";
-// import { useEffect, useState } from "react";
-// import { makeRequest } from "../makeRequest";
-
-// const useFetch = (url) => {
-//   const [data, setData] = useState(null);
-//   const [loading, setLoading] = useState(false);
-
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         setLoading(true);
-//         const res = await makeRequest.get(url);
-//         setLoading(false);
-//         setData(res.data.data);
-//       } catch (err) {
-//         // console.log(err);
-//         setLoading(false);
-//       }
-//     };
-//     fetchData();
-//   }, [url]);
-
-//   return { data, loading };
-// };
-
-// export default useFetch;

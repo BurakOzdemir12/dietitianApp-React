@@ -9,12 +9,21 @@ import {
   FaArrowAltCircleLeft,
   FaArrowAltCircleRight,
 } from "react-icons/fa";
+import { urlRecipes } from "../../endpoints";
 
 const RecipesDetail = () => {
-  const{id}=useParams()
-  const { data } = useFetch(`http://localhost:1337/api/recipes/${id}?populate=*`);
-  console.log(data);
-  
+  const { id } = useParams();
+  const data = useFetch(`${urlRecipes}/${id}`);
+   const { loading, error } = useFetch(urlRecipes);
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  const setdata=data.data;
+  console.log(setdata)
+
+
+ 
+
   window.onload = function () {
     document.querySelector(".cont_modal").className = "cont_modal";
   };
@@ -27,16 +36,15 @@ const RecipesDetail = () => {
   }
 
   let TotCookTime = 0;
-    // Access 'cooktime' and 'repairontime' from the attributes
-    const cookTime = data?.attributes?.cooktime || 0;
-    const repairOnTime = data?.attributes?.preparationtime || 0;
-  
-    // Add the times to the total
-    TotCookTime = cookTime + repairOnTime;
+  // Access 'cooktime' and 'repairontime' from the attributes
+  const cookTime = data?.data?.cooktime || 0;
+  const repairOnTime = data?.data?.preparationtime || 0;
+
+  // Add the times to the total
+  TotCookTime = cookTime + repairOnTime;
 
   return (
     <div>
-   
       <Row noGutters>
         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
           <div class="cont_principal ">
@@ -44,7 +52,10 @@ const RecipesDetail = () => {
               <div class="cont_modal cont_modal_active">
                 <div class="cont_photo">
                   <div class="cont_img_back">
-                    <img src={`http://localhost:1337${data?.attributes?.img?.data[0]?.attributes?.url}`} alt="" />
+                    <img
+                  src={`http://localhost:5149${setdata.img}`}
+                  alt=""
+                    />
                   </div>
                   <div class="cont_mins">
                     <div class="sub_mins">
@@ -61,16 +72,12 @@ const RecipesDetail = () => {
                     </div>
                   </div>
                   <div class="cont_servings">
-                    <h3>{data?.attributes?.porsionsize}</h3>
+                    <h3>{data.data.porsionsize}</h3>
                     <span>SERVINGS</span>
                   </div>
                   <div class="cont_detalles">
-                    <h3>{data?.attributes?.name}</h3>
-                    <p>
-                      lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Aliquam sagittis est est aliquam, sed faucibus massa
-                      lobortis. Maecenas non est justo.est
-                    </p>
+                    <h3>{data.data.name}</h3>
+                    <p>{data.data.recipeDetail}</p>
                   </div>
                 </div>
                 <div class="cont_text_ingredients">
@@ -92,26 +99,28 @@ const RecipesDetail = () => {
 
                     <div class="cont_text_det_preparation">
                       <div class="cont_title_preparation">
-                        <p className="mt-4">🔥 {data?.attributes?.kcal} KCAL</p>
+                        <p className="mt-4">🔥 {data.data.kcal} KCAL</p>
                       </div>
                       <div class="cont_info_preparation d-flex">
                         <p className="d-inline-block">
                           <i className="" style={{ fontSize: 50 }}>
                             🍽️
                           </i>{" "}
-                           <br/>{data?.attributes?.porsionsize} Person
+                          <br />
+                          {data.data.porsionsize} Person
                         </p>
                         <p className="d-inline-block">
                           <i className="" style={{ fontSize: 50 }}>
                             ♨
                           </i>{" "}
-                         <br/> {data?.attributes?.cooktime}Minutes
+                          <br /> {data.data.cooktime} Minutes
                         </p>
                         <p className="d-inline-block">
                           <i className="" style={{ fontSize: 50 }}>
                             🔪
                           </i>{" "}
-                          {data?.attributes?.preparationtime}Minutes
+                          <br />
+                          {data.data.preparationTime} Minutes
                         </p>
                       </div>
                     </div>
@@ -140,27 +149,29 @@ const RecipesDetail = () => {
           <div className="recipeCard">
             <div class="">
               <div class="">
-                <p>🔥 {data?.attributes?.kcal} KCAL</p>
-                <p>1 Porsion {data?.attributes?.totalporsiongram} gr</p>
+                <p>🔥 {data.data.kcal} KCAL</p>
+                <p>1 Porsion {data.data.totalPorsiongram} gr</p>
               </div>
               <div class="mx-2 recipeCard d-flex">
                 <p className="px-3 d-inline-block">
                   <i className="" style={{ fontSize: 50 }}>
                     🍽️
                   </i>{" "}
-                  <br/>{data?.attributes?.porsionsize}{" "} <br/>Person
+                  <br />
+                  {data.data.porsionsize} <br />
+                  Person
                 </p>
                 <p className="px-3 d-inline-block">
                   <i className="" style={{ fontSize: 50 }}>
                     ♨
                   </i>{" "}
-                  <br/>  {data?.attributes?.cooktime}{" "} <br/> Minutes
+                  <br /> {data.data.cooktime} <br /> Minutes
                 </p>
                 <p className="px-3 d-inline-block">
                   <i className="" style={{ fontSize: 50 }}>
                     🔪
                   </i>{" "}
-                  <br/>  {data?.attributes?.preparationtime}{" "} <br/> Minutes
+                  <br /> {data.data.preparationtime} <br /> Minutes
                 </p>
               </div>
             </div>

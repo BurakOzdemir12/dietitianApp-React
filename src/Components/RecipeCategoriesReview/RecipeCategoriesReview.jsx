@@ -1,15 +1,29 @@
 import React from "react";
 import useFetch from "../../hooks/useFetch";
 import RecipiesCard from "../card/RecipiesCard";
+import { urlRecipes } from "../../endpoints";
 
 const RecipeCategoriesReview = ({ selected }) => {
-  const { data, loading } = useFetch(
-    `http://localhost:1337/api/recipe-categories?populate=*&filters[id][$eq]=${selected}`
-  );
- !loading && console.log(data?.[0]?.attributes?.recipes?.data)
+  const { data: recipes, loading, error } = useFetch(urlRecipes);
+console.log(recipes)
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading data.</div>;
+  }
+
+  if (!recipes || recipes.length === 0) {
+    return <div>No data available</div>;
+  }
+
+  const filteredRecipes = selected? recipes.filter(recipe => recipe.recipeCategoryId === parseInt(selected[0], 10)):recipes;
+
   return (
     <>
-      {  !loading && data?.[0]?.attributes?.recipes?.data?.map((food,i,) => <RecipiesCard key={i} items={food}/>)}
+    
+      <RecipiesCard items={filteredRecipes} />
     </>
   );
 };

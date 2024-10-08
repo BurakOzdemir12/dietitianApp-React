@@ -1,20 +1,31 @@
-import React from 'react';
+import React from "react";
 import useFetch from "../../hooks/useFetch";
-
-import FoodCard2 from '../card/FoodCard2';
+import FoodCard2 from "../card/FoodCard2";
+import { urlFoods, urlFoodsCategories } from "../../endpoints";
 
 const Lists = ({ catId }) => {
-    const { data,loading } = useFetch(
-        `http://localhost:1337/api/categories?populate=*&filters[id][$eq]=${catId}`
-    );
+
     
-    //  console.log(data)   
-    return (
-        <div>
-            {/* this Component shows (foods) which is  includes different Categories */}
-{  !loading && data?.[0]?.attributes?.foods?.data?.map((food,i,) => <FoodCard2 key={i} foods={food}/>)}          
-        </div>
-    );
+  const { data, loading } = useFetch(urlFoods);
+  
+  // Eğer data bir dizi değilse, uygun bir kontrol ekleyin
+  const isArray = Array.isArray(data);
+
+  // foodcategoryId ile catId'yi eşleştirerek filtreleme yapın
+  const filteredData = isArray ? data.filter(food => food.foodcategoryId === catId) : [];
+
+//   console.log(filteredData, "Filtrelenmiş veriler");
+
+  return (
+    <div>
+      {/* Bu bileşen, verilen kategoriye ait yiyecekleri gösterir */}
+      {!loading && filteredData.length > 0 ? (
+        filteredData.map((food) => <FoodCard2 key={food.id} food={food} />)
+      ) : (
+        <p>No food items found for this category.</p>
+      )}
+    </div>
+  );
 };
 
 export default Lists;

@@ -13,10 +13,12 @@ import ReloadScroll from "../Components/reloadScroll/ReloadScroll";
 import CalculatorDetail from "../Pages/calculator/CalculatorDetail";
 import RecipesDetail from "../Pages/recipes/RecipesDetail";
 
-// import Test from "../Pages/recipes/test";
+
 import Details from "../Pages/calculator/Details";
 import Recipes from "../Pages/recipes/Recipes";
+
 import CategoryFoods from "../Components/CategoryFoods/CategoryFoods";
+import ChatBot from "../Components/ChatBot/ChatBot";
 
 
 
@@ -28,15 +30,13 @@ function App() {
       <BrowserRouter>
         <Navi />
         <ReloadScroll />
-
+        <ChatBot/>
+        
         <Routes>
           <Route path="/" Component={Home} />
           <Route exact path="/home" Component={Home} />
 
           <Route path="/recipes" Component={Recipes} />
-          {/* <Route path="/recipes/:recipeId" Component={RecipesDetail} /> */}
-          
-          {/* <Route path="/test" Component={Test}/> */}
           <Route path="/recipes/:id" Component={RecipesDetail} />
       
           <Route path="/Calculator" Component={Calculator} />
@@ -45,6 +45,7 @@ function App() {
           <Route path="/details/:id" Component={Details} />
           <Route path="/catitems/:id" Component={CategoryFoods} />
 
+          
           {/* <Route  path="/Calculator/:productId" Component={SingleProduct}  /> */}
         </Routes>
 

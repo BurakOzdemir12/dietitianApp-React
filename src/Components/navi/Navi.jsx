@@ -78,12 +78,12 @@ function Navi(args) {
                     </a>
                   </NavItem>
                   <NavItem className="mx-3 py-2">
-                    <a className="navlink" href="#">
+                    <a className="navlink" href="/">
                       FOOD FACTS
                     </a>
                   </NavItem>
                   <NavItem className="mx-3 py-2">
-                    <a className="navlink" href="#">
+                    <a className="navlink" href="/">
                       CONTACT
                     </a>
                   </NavItem>

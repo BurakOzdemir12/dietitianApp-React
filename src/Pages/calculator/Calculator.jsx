@@ -16,20 +16,15 @@ import { products } from "../../Components/Json/NutritionalItems";
 import useFetch from "../../hooks/useFetch";
 import FoodCard from "../../Components/card/FoodCard";
 import Catlist from "../../Components/CatList/Catlist";
+import { urlFoods } from "../../endpoints";
 
 const Calculator = (foods) => {
-  const { data, loading } = useFetch(
-    "http://localhost:1337/api/foods?populate=*"
-  );
-  console.log(data + " erroooor");
+  const { data, loading } = useFetch(urlFoods);
+  // console.log(data);
   const [value, setQuery] = useState("");
   const onChange = (e) => {
     setQuery(e.target.value);
   };
-
-  {
-    !loading && console.log(data[0].attributes?.details?.[0]);
-  }
 
   return (
     <Container fluid>
@@ -105,7 +100,7 @@ const Calculator = (foods) => {
               <h4 style={{ color: "black", fontWeight: "600", opacity: 0.7 }}>
                 Most Searched Foods
               </h4>
-              {data?.slice(0,5).map((item)=> (
+              {data?.slice(0, 5).map((item) => (
                 <div className=" mt-5 Card">
                   <div className="Product">
                     <FoodCard key={item.id} foods={item} />
@@ -119,7 +114,7 @@ const Calculator = (foods) => {
         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
           <div className="headertwodiv">
             <h4 className="headertwo"> FOOD CATEGORIES</h4>
-            </div>
+          </div>
           <div className="allFood-Categories-List  d-flex flex-wrap  justify-content-center justify-content-md-center">
             <Catlist />
           </div>
