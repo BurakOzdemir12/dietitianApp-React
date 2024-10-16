@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+Dietetian Project with React and Asp.Net Core.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- This repo contains Front-end parts, you can access to Backend repo (Asp.Net) with this link: https://github.com/BurakOzdemir12/dietitianApp-Asp.Net-Core.git
+
+- Project already connected each other using .env.development and endpoints file.
+
+
 
 ## Available Scripts
 

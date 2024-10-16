@@ -40,7 +40,7 @@ function App() {
           <Route path="/recipes/:id" Component={RecipesDetail} />
       
           <Route path="/Calculator" Component={Calculator} />
-          <Route path="/Calculator/:id" Component={CalculatorDetail} />
+          <Route path="/Calculator/:id"  Component={CalculatorDetail} />
 
           <Route path="/details/:id" Component={Details} />
           <Route path="/catitems/:id" Component={CategoryFoods} />

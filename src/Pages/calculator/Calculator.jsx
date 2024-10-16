@@ -64,8 +64,8 @@ const Calculator = (foods) => {
                     Search
                   </Button> */}
 
-                {products
-                  .filter((item) => {
+                {data
+                  ?.filter((item) => {
                     const searchTerm = value.toLowerCase();
                     const name = item.name.toLowerCase();
                     return searchTerm && name.startsWith(searchTerm);
@@ -76,12 +76,12 @@ const Calculator = (foods) => {
                       <li className=" mx-3 listItem">
                         <Link
                           key={product.id}
-                          to={`/Calculator/${product.name}`}
+                          to={`/Calculator/${product?.id}`}
                         >
                           <div className="d-inline">
                             <img
                               className="mx- me-2"
-                              src={product.img}
+                              src={`http://localhost:5149${product.img}`}
                               style={{ height: 55 }}
                             ></img>
                           </div>
