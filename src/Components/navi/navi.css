@@ -24,21 +24,21 @@ body {
   align-items: center;
   align-content: center;
   text-align: center;
-  background-color: var(--blanchedalmond);
+  /* background-color: var(--blanchedalmond); */
  
 }
 .navlink {
-  opacity: 0.65;
+  opacity: 0.95!important;;
   text-decoration: none;
-  color: rgb(0, 0, 0);
-  font-size: 3.3ch;
+  /* color: rgb(0, 0, 0); */
+  font-size: 3.5ch;
   font-weight: 350;
-
+  letter-spacing: 0.1ch;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
 .navlink:hover {
-  color: #8fbc8f;
+  color: #8fbc8f!important;
 }
 .navicons {
   font-size: 3ch;
@@ -50,7 +50,7 @@ body {
 }
 .navbar {
   max-width: 100%;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
 }
 
 @media screen and (min-width: 1200px) {

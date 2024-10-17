@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { fetchData } from "../services/apiServices";
+import PageSkeleton from "../Components/PageSkeleton";
 
 const useFetch = (endpoint) => {
   const [data, setData] = useState(null);
@@ -9,19 +10,32 @@ const useFetch = (endpoint) => {
 
   useEffect(() => {
     const getData = async () => {
+      setLoading(true); 
+      setError(null); 
+
       try {
         const res = await fetchData(endpoint);
-        setLoading(false);
-        setData(res);
+        if(res){
+          setData(res);
+        }else{
+         throw new Error("No data found");
+        }
       } catch (err) {
         setError(err);
-
+        
+           <PageSkeleton/>
+            window.location.reload()
+      
+        
         console.log(err);
       } finally {
         setLoading(false);
       }
     };
-    getData();
+    if(endpoint){
+      getData();
+
+    }
   }, [endpoint]);
 
   return { data, loading,error };

@@ -19,15 +19,21 @@ import Recipes from "../Pages/recipes/Recipes";
 
 import CategoryFoods from "../Components/CategoryFoods/CategoryFoods";
 import ChatBot from "../Components/ChatBot/ChatBot";
+import { ColorModeContext ,useMode} from "../theme";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import PageSkeleton from "../Components/PageSkeleton";
 
 
 
 
 function App() {
- 
+  const [theme, colorMode] = useMode();
+
   return (
     <div>
-      <BrowserRouter>
+      <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Navi />
         <ReloadScroll />
         <ChatBot/>
@@ -44,14 +50,15 @@ function App() {
 
           <Route path="/details/:id" Component={Details} />
           <Route path="/catitems/:id" Component={CategoryFoods} />
+          <Route path="/s" Component={PageSkeleton} />
 
-          
           {/* <Route  path="/Calculator/:productId" Component={SingleProduct}  /> */}
         </Routes>
 
         <ScrollToTop />
         <Footer />
-      </BrowserRouter>
+      </ThemeProvider>
+      </ColorModeContext.Provider>
     </div>
   );
 }

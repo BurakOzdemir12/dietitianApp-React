@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Form, useParams } from "react-router-dom";
 // import { Recipes } from "../../Components/Json/Recipes";
 import { Card, Col, Row } from "reactstrap";
 import "../../Pages/recipes/recipeDetail2.css";
@@ -19,21 +19,39 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { green, red } from "@mui/material/colors";
+import { blue, blueGrey, green, grey, red, yellow } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import { pink } from "@mui/material/colors";
 import Checkbox from "@mui/material/Checkbox";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import Divider from "@mui/material/Divider";
+import { dark } from "@mui/material/styles/createPalette";
+import NutritionComponent from "./NutritionComponent";
+import { Block, ShareOutlined } from "@mui/icons-material";
+import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
+import { colors, useTheme } from "@mui/material";
 
+import { ColorModeContext, tokens } from "../../theme";
+import PageSkeleton from "../../Components/PageSkeleton";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const RecipesDetail = () => {
   const { id } = useParams();
   const data = useFetch(`${urlRecipes}/${id}`);
   const { loading, error } = useFetch(urlRecipes);
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
 
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const colorMode = useContext(ColorModeContext);
+  if (loading) return <PageSkeleton/>;
+  if (error){
+     <PageSkeleton/>
+      window.location.reload()
+
+  }
   const setdata = data.data;
+
   console.log(setdata);
 
   window.onload = function () {
@@ -49,8 +67,8 @@ const RecipesDetail = () => {
 
   let TotCookTime = 0;
   // Access 'cooktime' and 'repairontime' from the attributes
-  const cookTime = data?.data?.cooktime || 0;
-  const repairOnTime = data?.data?.preparationtime || 0;
+  const cookTime = setdata.cooktime || 0;
+  const repairOnTime = setdata.preparationTime || 0;
 
   // Add the times to the total
   TotCookTime = cookTime + repairOnTime;
@@ -67,139 +85,14 @@ const RecipesDetail = () => {
   }));
 
   return (
-    <div>
+    <Box
+      sx={{
+        background: colors.backGround[100],
+      }}
+    >
       <Row noGutters>
-        <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-          <div class="cont_principal ">
-            <div class="cont_central ">
-              <div class="cont_modal cont_modal_active">
-                <div class="cont_photo">
-                  <div class="cont_img_back">
-                    <img src={`http://localhost:5149${setdata?.img}`} alt="" />
-                  </div>
-                  <div class="cont_mins">
-                    <div class="sub_mins">
-                      <h3>{TotCookTime}</h3>
-                      <span>MINS</span>
-                    </div>
-                    <div class="cont_icon_right">
-                      <a href="#">
-                        {" "}
-                        <i class="material-icons">
-                          <FaArrowAltCircleRight fontSize={25} />
-                        </i>
-                      </a>
-                    </div>
-                  </div>
-                  <div class="cont_servings">
-                    <h3>{data.data.porsionsize}</h3>
-                    <span>SERVINGS</span>
-                  </div>
-                  <div class="cont_detalles">
-                    <h3>{data.data.name}</h3>
-                    <p>{data.data.recipeDetail}</p>
-                  </div>
-                </div>
-                <div class="cont_text_ingredients">
-                  <div class="cont_over_hidden">
-                    <div class="cont_tabs">
-                      <ul>
-                        <li>
-                          <a href="#">
-                            <h4>INGREDIENTS</h4>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <h4>VALUES</h4>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div class="cont_text_det_preparation">
-                      <div class="cont_title_preparation">
-                        <p className="mt-4">🔥 {data.data.kcal} KCAL</p>
-                      </div>
-                      <div class="cont_info_preparation d-flex">
-                        <p className="d-inline-block">
-                          <i className="" style={{ fontSize: 50 }}>
-                            🍽️
-                          </i>{" "}
-                          <br />
-                          {data.data.porsionsize} Person
-                        </p>
-                        <p className="d-inline-block">
-                          <i className="" style={{ fontSize: 50 }}>
-                            ♨
-                          </i>{" "}
-                          <br /> {data.data.cooktime} Minutes
-                        </p>
-                        <p className="d-inline-block">
-                          <i className="" style={{ fontSize: 50 }}>
-                            🔪
-                          </i>{" "}
-                          <br />
-                          {data.data.preparationTime} Minutes
-                        </p>
-                      </div>
-                    </div>
-                    <div class="cont_btn_mas_dets">
-                      <a href="#">
-                        <i class="material-icons">
-                          {/* <FaArrowAltCircleDown fontSize={25} /> */}
-                        </i>
-                      </a>
-                    </div>
-                  </div>
-                  <div class="cont_btn_open_dets">
-                    <a href="#" onClick={open_close}>
-                      <i class="material-icons">
-                        <FaArrowAltCircleLeft fontSize={30} />
-                      </i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Col>
-
-        <Col className="" xs={12} sm={12} md={12} lg={12} xl={12}>
-          <div className="recipeCard">
-            <div class="">
-              <div class="">
-                <p>🔥 {data.data.kcal} KCAL</p>
-                <p>1 Porsion {data.data.totalPorsiongram} gr</p>
-              </div>
-              <div class="mx-2 recipeCard d-flex">
-                <p className="px-3 d-inline-block">
-                  <i className="" style={{ fontSize: 50 }}>
-                    🍽️
-                  </i>{" "}
-                  <br />
-                  {data.data.porsionsize} <br />
-                  Person
-                </p>
-                <p className="px-3 d-inline-block">
-                  <i className="" style={{ fontSize: 50 }}>
-                    ♨
-                  </i>{" "}
-                  <br /> {data.data.cooktime} <br /> Minutes
-                </p>
-                <p className="px-3 d-inline-block">
-                  <i className="" style={{ fontSize: 50 }}>
-                    🔪
-                  </i>{" "}
-                  <br /> {data.data.preparationtime} <br /> Minutes
-                </p>
-              </div>
-            </div>
-          </div>
-        </Col>
-
         <Container maxWidth="xl">
-          <Grid justifyContent={"center"} mt={4} container>
+          <Grid mt={4} container>
             <Grid
               item
               xs={12}
@@ -213,81 +106,129 @@ const RecipesDetail = () => {
                 flexDirection: "column",
               }}
             >
-              <Typography mb={4} variant="h3">
-                {" "}
-                {data.data.name}
-              </Typography>
               <Box
                 mb={4}
                 display="grid"
                 gridTemplateColumns="repeat(12,minmax(0, 1fr))"
                 gridAutoRows="60px"
                 gap="5px"
+              >
+                <Typography
+                  sx={{
+                    "@media (max-width: 768px)": {
+                      gridColumn: "auto / span 12",
+                    },
+                    color: colors.grey[100],
+                  }}
+                  mb={0}
+                  mt={1}
+                  variant="h2"
+                  gridColumn="span 4"
+                  gridRow="span 1"
+                >
+                  {" "}
+                  {setdata.name}
+                </Typography>
+                <Box
+                  sx={{
+                    "@media (max-width: 767px)": { gridColumn: "auto /span 6" },
+                  }}
+                  gridColumn="span 2"
+                  gridRow="span 1"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <BookmarkIcon sx={{ ":hover": "green" }} />
+                  <BookmarkBorderIcon sx={{ ":hover": "green" }} />
+                </Box>
+                <Box
+                  sx={{
+                    "@media (max-width: 767px)": {
+                      gridColumn: "auto / span 6",
+                    },
+                  }}
+                  gridColumn="span 2"
+                  gridRow="span 1"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <ShareOutlinedIcon sx={{ fontSize: "35px" }} />
+                </Box>
+              </Box>
+              <Box
+                mb={4}
+                display="grid"
+                gridTemplateColumns="repeat(12,minmax(0, 1fr))"
+                gridAutoRows="40px"
+                gap="5px"
                 // sx={{
                 //   "& > div ": { gridColumn: isNonMobile ? undefined : "span 12" },
                 // }}
               >
                 <Box
-                sx={{'@media (max-width: 767px)': { gridColumn: "span 4" }}}
+                  sx={{ "@media (max-width: 767px)": { gridColumn: "span 4" },
+                backgroundColor: colors.greenAccent[900],
+                }}
                   gridColumn="auto / span 2"
                   gridRow="span 1"
-                  backgroundColor={red[100]}
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
                 >
-                  <Typography>Diyetisyen Adı</Typography>
+                  <Typography fontSize={20} variant="h5">Diyetisyen Adı</Typography>
                 </Box>
                 <Box
-                sx={{'@media (max-width: 767px)': { gridColumn: "span 4" }}}
+                  sx={{ "@media (max-width: 767px)": { gridColumn: "span 4" }  ,backgroundColor: colors.greenAccent[900], }}
                   gridColumn="auto / span 2"
                   gridRow="span 1"
-                  backgroundColor={red[100]}
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
                 >
-                  <Typography>Tarih</Typography>
+                  <Typography>20.11.2024</Typography>
                 </Box>
                 <Box
-                sx={{'@media (max-width: 767px)': { gridColumn: "span 4" }}}
+                  sx={{ "@media (max-width: 767px)": { gridColumn: "span 4" } ,backgroundColor: colors.greenAccent[900], }}
                   gridColumn="auto / span 2"
                   gridRow="span 1"
-                  backgroundColor={red[100]}
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
                 >
-                  <Typography>Tarih</Typography>
+                  <Typography>35 yorum</Typography>
                 </Box>
                 <Box
-                sx={{'@media (max-width: 767px)': { gridColumn: "span 4" }}}
+                  sx={{ "@media (max-width: 767px)": { gridColumn: "span 4" } ,backgroundColor: colors.greenAccent[900], }}
                   gridColumn="auto / span 2"
                   gridRow="span 1"
-                  backgroundColor={red[100]}
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
                 >
-                  <Typography>Tarih</Typography>
-                </Box>
-                <Box
-                sx={{'@media (max-width: 767px)': { gridColumn: "span 4" }}}
-                  gridColumn="auto / span 2"
-                  gridRow="span 1"
-                  backgroundColor={red[100]}
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <Typography>Tarih</Typography>
+                  <Typography>8 kaydedildi</Typography>
                 </Box>
               </Box>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={8}
+              lg={8}
+              xl={8}
+              sx={{
+                // background: "blue",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
               <Box
                 justifyContent="start"
                 sx={{
                   width: "100%",
-                  height: "500px",
+                  height: "600px",
                   display: "flex",
                   alignItems: "flex-start",
                   justifyContent: "flex-start",
@@ -300,11 +241,34 @@ const RecipesDetail = () => {
                   style={{
                     maxWidth: "100%",
                     maxHeight: "100%",
-                    objectFit: "contain", // Resmi çerçeveye sığdırır
+                    objectFit: "contain",
                     display: "block",
-                    // margin: "20px",
+                    margin: "auto",
                   }}
                 />
+                <Box
+                  sx={{
+                    display: {
+                      xs: "none",
+                      sm: "block",
+                      md: "none",
+                      lg: "none",
+                      xl: "none",
+                    },
+                    "@media (max-width: 767px)": {
+                      display: "none",
+                  },
+                    // Sadece 768px altında göster
+                    margin: "0 auto",
+                    backgroundColor: colors.greenAccent[900],
+                    width: "40%",
+                    
+                  }}
+                >
+                  {setdata && (
+                    <NutritionComponent data={setdata.nutrition} />
+                  )}
+                </Box>
               </Box>
 
               <Col xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -317,6 +281,9 @@ const RecipesDetail = () => {
                       mt: 2,
                       mb: 4,
                       direction: "column",
+                    },
+                    "@media (min-width: 1024px)": {
+                      justifyContent: "center",
                     },
                   }}
                   mt={5}
@@ -352,7 +319,7 @@ const RecipesDetail = () => {
                 </Stack>
               </Col>
               <Grid item>
-                <Typography variant="h5">Recipes detail for recipe</Typography>
+                <Typography variant="h5">Recipes detail for recipe Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum ipsum obcaecati, nisi tempore error assumenda ex doloremque quae consequatur porro, repudiandae enim nobis perferendis reprehenderit placeat rerum! Quibusdam, maiores nobis.</Typography>
 
                 <Typography mb={3} mt={5} variant="h3">
                   Malzemeler:
@@ -365,7 +332,6 @@ const RecipesDetail = () => {
                         {...label}
                         // defaultChecked
                         sx={{
-                          mx: -1,
                           color: green[800],
                           "&.Mui-checked": {
                             color: green[600],
@@ -385,7 +351,6 @@ const RecipesDetail = () => {
                         {...label}
                         // defaultChecked
                         sx={{
-                          mx: -1,
                           color: green[800],
                           "&.Mui-checked": {
                             color: green[600],
@@ -457,18 +422,65 @@ const RecipesDetail = () => {
               </Grid>
             </Grid>
             <Grid
-              sx={{ background: "red" }}
+              sx={{
+                maxWidth: "100%",
+                // background: "red",
+                "@media (width: 768px)": {
+                  backgroundColor: blueGrey[500],
+                  display: "none",
+                },
+              }}
               item
               xs={12}
-              sm={12}
-              md={8}
+              sm={6}
+              md={4}
               lg={4}
               xl={4}
-            >asdsa</Grid>
+            >
+              <Box
+                sx={{py: 0.1,
+                  margin: "0 auto",
+                  display: { sm: "block", lg: "block", xl: "block" },
+                  backgroundColor: colors.greenAccent[900],
+                  backgroundopacity: 0.5,
+                  width: {
+                    xl: "100%",
+                    lg: "100%",
+                    md: "100%",
+                    sm: "75%",
+                    xs: "100%",
+                  },
+                  "@media (width: 820px)": {
+                    display: "none",
+                  },
+                }}
+              >
+                {setdata && <NutritionComponent data={setdata.nutrition} />}
+              </Box>
+            </Grid>
+            <Grid
+              sx={{
+                maxWidth: "100%",
+                backgroundColor: yellow[500],
+              }}
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              lg={4}
+              xl={4}
+            >
+              <Typography mt={5}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Officiis, eius fugit? Laborum sapiente repellendus odio culpa
+                quos beatae maiores eaque consectetur. Architecto adipisci dolor
+                consequuntur quae deleniti! Doloremque, commodi quidem.
+              </Typography>
+            </Grid>
           </Grid>
         </Container>
       </Row>
-    </div>
+    </Box>
   );
 };
 
