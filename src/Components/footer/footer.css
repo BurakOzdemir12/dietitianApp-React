@@ -26,7 +26,7 @@
   --lato: "Lato", sans-serif;
 }
 .about {
-  background-color: var(--seashell);
+  /* background-color: var(--seashell); */
   height: auto;
   text-align: center;
 }
@@ -40,6 +40,8 @@
   font-weight: 600;
   letter-spacing: 0.2ch;
   font-size: 22px;
+
+
 }
 .formField {
   box-sizing: border-box;

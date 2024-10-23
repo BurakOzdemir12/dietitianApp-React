@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Form, useParams } from "react-router-dom";
 // import { Recipes } from "../../Components/Json/Recipes";
 import { Card, Col, Row } from "reactstrap";
@@ -40,17 +40,36 @@ const RecipesDetail = () => {
   const { id } = useParams();
   const data = useFetch(`${urlRecipes}/${id}`);
   const { loading, error } = useFetch(urlRecipes);
+  
+  const [cooktime, setCooktime] = useState(0);
+  const [kcal, setKcal] = useState(0);
+  const [name, setName] = useState('');
+  const [img, setImg] = useState('');
+  const [porsionsize, setPorsionsize] = useState(0);
+  const [preparationTime, setPreparationTime] = useState(0);
+  const [totalPorsiongram, setTotalPorsiongram] = useState(0);
 
+  useEffect(() => {
+    if (data) {
+      setCooktime(data?.data?.cooktime);
+      setImg(data?.data?.img);
+      // setKcal(data.data.kcal);
+      setName(data?.data?.name);
+      setPorsionsize(data?.data?.porsionsize);
+      setPreparationTime(data?.data?.preparationTime);
+      setTotalPorsiongram(data?.data?.totalPorsiongram);
+    }
+  }, [data]);
+  
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
-  if (loading) return <PageSkeleton/>;
-  if (error){
-     <PageSkeleton/>
-      window.location.reload()
-
+  if (loading) return <PageSkeleton />;
+  if (error) {
+    <PageSkeleton />;
+    window.location.reload();
   }
-  const setdata = data.data;
+  const setdata = data;
 
   console.log(setdata);
 
@@ -67,8 +86,8 @@ const RecipesDetail = () => {
 
   let TotCookTime = 0;
   // Access 'cooktime' and 'repairontime' from the attributes
-  const cookTime = setdata.cooktime || 0;
-  const repairOnTime = setdata.preparationTime || 0;
+  const cookTime = cooktime || 0;
+  const repairOnTime = preparationTime || 0;
 
   // Add the times to the total
   TotCookTime = cookTime + repairOnTime;
@@ -87,7 +106,7 @@ const RecipesDetail = () => {
   return (
     <Box
       sx={{
-        background: colors.backGround[100],
+        background: colors.backGround[400],
       }}
     >
       <Row noGutters>
@@ -118,7 +137,7 @@ const RecipesDetail = () => {
                     "@media (max-width: 768px)": {
                       gridColumn: "auto / span 12",
                     },
-                    color: colors.grey[100],
+                    color: colors.backGround[500],
                   }}
                   mb={0}
                   mt={1}
@@ -127,7 +146,7 @@ const RecipesDetail = () => {
                   gridRow="span 1"
                 >
                   {" "}
-                  {setdata.name}
+                  {name}
                 </Typography>
                 <Box
                   sx={{
@@ -139,14 +158,19 @@ const RecipesDetail = () => {
                   alignItems="center"
                   justifyContent="center"
                 >
-                  <BookmarkIcon sx={{ ":hover": "green" }} />
-                  <BookmarkBorderIcon sx={{ ":hover": "green" }} />
+                  <BookmarkIcon
+                    sx={{ color: colors.backGround[500], ":hover": "green" }}
+                  />
+                  <BookmarkBorderIcon
+                    sx={{ color: colors.backGround[500], ":hover": "green" }}
+                  />
                 </Box>
                 <Box
                   sx={{
                     "@media (max-width: 767px)": {
                       gridColumn: "auto / span 6",
                     },
+                    color: colors.backGround[500],
                   }}
                   gridColumn="span 2"
                   gridRow="span 1"
@@ -168,19 +192,25 @@ const RecipesDetail = () => {
                 // }}
               >
                 <Box
-                  sx={{ "@media (max-width: 767px)": { gridColumn: "span 4" },
-                backgroundColor: colors.greenAccent[900],
-                }}
+                  sx={{
+                    "@media (max-width: 767px)": { gridColumn: "span 4" },
+                    backgroundColor: colors.greenAccent[900],
+                  }}
                   gridColumn="auto / span 2"
                   gridRow="span 1"
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
                 >
-                  <Typography fontSize={20} variant="h5">Diyetisyen Adı</Typography>
+                  <Typography fontSize={20} variant="h5">
+                    Diyetisyen Adı
+                  </Typography>
                 </Box>
                 <Box
-                  sx={{ "@media (max-width: 767px)": { gridColumn: "span 4" }  ,backgroundColor: colors.greenAccent[900], }}
+                  sx={{
+                    "@media (max-width: 767px)": { gridColumn: "span 4" },
+                    backgroundColor: colors.greenAccent[900],
+                  }}
                   gridColumn="auto / span 2"
                   gridRow="span 1"
                   display="flex"
@@ -190,7 +220,10 @@ const RecipesDetail = () => {
                   <Typography>20.11.2024</Typography>
                 </Box>
                 <Box
-                  sx={{ "@media (max-width: 767px)": { gridColumn: "span 4" } ,backgroundColor: colors.greenAccent[900], }}
+                  sx={{
+                    "@media (max-width: 767px)": { gridColumn: "span 4" },
+                    backgroundColor: colors.greenAccent[900],
+                  }}
                   gridColumn="auto / span 2"
                   gridRow="span 1"
                   display="flex"
@@ -200,7 +233,10 @@ const RecipesDetail = () => {
                   <Typography>35 yorum</Typography>
                 </Box>
                 <Box
-                  sx={{ "@media (max-width: 767px)": { gridColumn: "span 4" } ,backgroundColor: colors.greenAccent[900], }}
+                  sx={{
+                    "@media (max-width: 767px)": { gridColumn: "span 4" },
+                    backgroundColor: colors.greenAccent[900],
+                  }}
                   gridColumn="auto / span 2"
                   gridRow="span 1"
                   display="flex"
@@ -236,7 +272,9 @@ const RecipesDetail = () => {
                 }}
               >
                 <img
-                  src={`http://localhost:5149${setdata?.img}`}
+                  src={`http://localhost:5149${img || ""}`}
+
+                  // src={`http://localhost:5149${setdata?.img}`}
                   alt="Resim"
                   style={{
                     maxWidth: "100%",
@@ -257,17 +295,14 @@ const RecipesDetail = () => {
                     },
                     "@media (max-width: 767px)": {
                       display: "none",
-                  },
+                    },
                     // Sadece 768px altında göster
                     margin: "0 auto",
                     backgroundColor: colors.greenAccent[900],
                     width: "40%",
-                    
                   }}
                 >
-                  {setdata && (
-                    <NutritionComponent data={setdata.nutrition} />
-                  )}
+                  { <NutritionComponent />}
                 </Box>
               </Box>
 
@@ -292,7 +327,12 @@ const RecipesDetail = () => {
                   direction="row"
                   spacing={{ xs: 2, sm: 2, md: 3, lg: 4, xl: 5 }}
                 >
-                  <Item sx={{ fontSize: 20 }}>
+                  <Item
+                    sx={{
+                      backgroundColor: colors.greenAccent[900],
+                      fontSize: 20,
+                    }}
+                  >
                     {" "}
                     <Typography variant="h5"> Servis Boyutu </Typography>
                     <i className="" style={{ fontSize: 50 }}>
@@ -300,7 +340,12 @@ const RecipesDetail = () => {
                     </i>{" "}
                     Item 1
                   </Item>
-                  <Item sx={{ fontSize: 20 }}>
+                  <Item
+                    sx={{
+                      backgroundColor: colors.greenAccent[900],
+                      fontSize: 20,
+                    }}
+                  >
                     {" "}
                     <Typography variant="h5"> Pişirme Süresi </Typography>
                     <i className="" style={{ fontSize: 50 }}>
@@ -308,7 +353,12 @@ const RecipesDetail = () => {
                     </i>{" "}
                     Item 1
                   </Item>
-                  <Item sx={{ fontSize: 20 }}>
+                  <Item
+                    sx={{
+                      backgroundColor: colors.greenAccent[900],
+                      fontSize: 20,
+                    }}
+                  >
                     {" "}
                     <Typography variant="h5"> Hazırlama Süresi </Typography>
                     <i className="" style={{ fontSize: 50 }}>
@@ -319,9 +369,20 @@ const RecipesDetail = () => {
                 </Stack>
               </Col>
               <Grid item>
-                <Typography variant="h5">Recipes detail for recipe Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum ipsum obcaecati, nisi tempore error assumenda ex doloremque quae consequatur porro, repudiandae enim nobis perferendis reprehenderit placeat rerum! Quibusdam, maiores nobis.</Typography>
+                <Typography sx={{ color: colors.backGround[500] }} variant="h4">
+                  Recipes detail for recipe Lorem ipsum dolor sit amet
+                  consectetur adipisicing elit. Cum ipsum obcaecati, nisi
+                  tempore error assumenda ex doloremque quae consequatur porro,
+                  repudiandae enim nobis perferendis reprehenderit placeat
+                  rerum! Quibusdam, maiores nobis.
+                </Typography>
 
-                <Typography mb={3} mt={5} variant="h3">
+                <Typography
+                  sx={{ fontWeight: 600, color: colors.backGround[500] }}
+                  mb={3}
+                  mt={5}
+                  variant="h3"
+                >
                   Malzemeler:
                 </Typography>
                 {/* data map  */}
@@ -340,7 +401,11 @@ const RecipesDetail = () => {
                       />
                     }
                     label={
-                      <Typography mx={2} variant="h5">
+                      <Typography
+                        sx={{ color: colors.backGround[500] }}
+                        mx={2}
+                        variant="h4"
+                      >
                         Soğan
                       </Typography>
                     }
@@ -359,7 +424,11 @@ const RecipesDetail = () => {
                       />
                     }
                     label={
-                      <Typography mx={2} variant="h5">
+                      <Typography
+                        sx={{ color: colors.seashellBackground[500] }}
+                        mx={2}
+                        variant="h4"
+                      >
                         Soğan
                       </Typography>
                     }
@@ -367,7 +436,15 @@ const RecipesDetail = () => {
                 </Stack>
               </Grid>
               <Grid item>
-                <Typography mb={3} mt={5} variant="h3">
+                <Typography
+                  sx={{
+                    fontWeight: 600,
+                    color: colors.seashellBackground[500],
+                  }}
+                  mb={3}
+                  mt={5}
+                  variant="h3"
+                >
                   Hazırlanış:
                 </Typography>
                 {/* data map  */}
@@ -390,7 +467,11 @@ const RecipesDetail = () => {
                       />
                     }
                     label={
-                      <Typography mx={2} variant="h5">
+                      <Typography
+                        sx={{ color: colors.backGround[500] }}
+                        mx={2}
+                        variant="h4"
+                      >
                         Lorem ipsum dolor sit amet consectetur adipisicing
                         elit.delectus tenetur! Harum temporibus necessitatibus,{" "}
                       </Typography>
@@ -411,7 +492,11 @@ const RecipesDetail = () => {
                       />
                     }
                     label={
-                      <Typography mx={2} variant="h5">
+                      <Typography
+                        sx={{ color: colors.backGround[500] }}
+                        mx={2}
+                        variant="h4"
+                      >
                         Commodi voluptas, a eaque at ullam qui esse deleniti
                         quis recusandae quidem porro deserunt aliquid odio
                         earum!
@@ -438,7 +523,8 @@ const RecipesDetail = () => {
               xl={4}
             >
               <Box
-                sx={{py: 0.1,
+                sx={{
+                  py: 0.1,
                   margin: "0 auto",
                   display: { sm: "block", lg: "block", xl: "block" },
                   backgroundColor: colors.greenAccent[900],
@@ -455,7 +541,7 @@ const RecipesDetail = () => {
                   },
                 }}
               >
-                {setdata && <NutritionComponent data={setdata.nutrition} />}
+                { <NutritionComponent  />}
               </Box>
             </Grid>
             <Grid

@@ -49,7 +49,10 @@ body {
   color: var(--DarkSeaGreen);
 }
 .navbar {
-  max-width: 100%;
+    max-width: 100%;
+    /* background-color: #ffffff; */
+  
+
   /* background-color: #ffffff; */
 }
 

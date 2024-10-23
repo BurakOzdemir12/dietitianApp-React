@@ -32,7 +32,7 @@ body {
 
 /* about */
 .about {
-  background-color: var(--seashell);
+  /* background-color: var(--seashell); */
   height: 108.5ch;
 }
 .abouttext {
@@ -40,7 +40,7 @@ body {
   font-family: var(--robotoslab);
   font-size: 2.23ch;
 }
-.hello {
+.hello  {
   font-family: var(--dancingscript);
   font-size: 7.3ch;
 }
@@ -56,7 +56,7 @@ body {
   border: none;
   cursor: pointer;
   font-weight: 500;
-  color: var(--txtcolor);
+  /* color: var(--txtcolor); */
   background: linear-gradient(to bottom left, var(--color) 50%, #0000 50.1%) top
       right,
     linear-gradient(to top right, var(--color) 50%, #0000 50.1%) bottom left;
@@ -103,6 +103,7 @@ body {
   background-repeat: no-repeat;
 }
 .img2 {
+  max-height: 100%;
   object-fit: scale-down;
   max-width: 100%;
   background-repeat: no-repeat;
@@ -126,20 +127,23 @@ body {
 }
 
 @media (min-width: 320px) {
-  /* smartphones, iPhone, portrait 480x320 phones */
+  
 }
-@media (max-width: 320px) {
-  /* smartphones, iPhone, portrait 480x320 phones */
-  .about {
-    min-height: 130ch;
+
+@media (max-width: 425px) {
+  
+  .hello{
+    font-size: 6ch;
   }
 }
-@media (max-width: 481px) {
-  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
-}
+
 @media (max-width: 641px) {
   /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
-
+}
+@media (max-width: 768px) {
+  .Readmore {
+    margin-bottom: 5%;
+  }
 }
 @media (max-width: 964px) {
   /* tablet, landscape iPad, lo-res laptops ands desktops */
@@ -151,9 +155,33 @@ body {
 @media (min-width: 964px) {
   /* tablet, landscape iPad, lo-res laptops ands desktops */
 }
-@media (min-width: 1025px) {
-  /* big landscape tablets, laptops, and desktops */
+
+@media (min-width: 1024px) {
+  .dot {
+    display: none;
+  }
+  /* .hello {
+    margin-top: 0;
+  } */
 }
-@media (min-width: 1230px) {
-  /* hi-res laptops and desktops */
+
+
+@media (min-width: 1440px) {
+  .hello {
+    align-items: center;
+    margin-top: 8%;
+  }
+}
+@media (max-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+  .about {
+    min-height: 102ch;
+  }
+  .hello{
+    font-size: 5ch;
+  }
+  .Readmore {
+    margin-bottom: 0;
+  }
+  
 }

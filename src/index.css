@@ -6,6 +6,7 @@ body,
 .app,
 .RouteConfig,
 .content {
+  background-color: black;
   height: 100%;
   width: 100%;
  font-family: 'Source Sans Pro ', sans-serif;
@@ -19,14 +20,14 @@ body,
   position: relative;
 }
 ::-webkit-scrollbar{
-  width: 10px;
+  width: 15px;
 }
 ::-webkit-scrollbar-track{
-  background: #e0e0e0;
+  background: #443515;
 }
 ::-webkit-scrollbar-thumb{
-  background: #888;
+  background: #11b450;
 }
 ::-webkit-scrollbar-track:hover{
-  background: #555;
+  background: #2c1902;
 }

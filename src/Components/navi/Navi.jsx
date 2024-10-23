@@ -76,7 +76,7 @@ function Navi(args) {
                     className="navlink"
                     href="#about"
                   >
-                    ABOUT
+                    HAKKIMDA
                   </a>
                 </NavItem>
                 <NavItem className="mx-3 py-2">
@@ -85,7 +85,7 @@ function Navi(args) {
                     className=" navlink"
                     href="/calculator"
                   >
-                    CALORIE CALCULATOR
+                    KAÇ KALORİ ?
                   </a>
                 </NavItem>
                 {/* <NavItem className="mx-3 py-2">
@@ -99,7 +99,7 @@ function Navi(args) {
                     className="navlink"
                     href="/recipes"
                   >
-                    RECIPES
+                    TARİFLER
                   </a>
                 </NavItem>
                 <NavItem className="mx-3 py-2">
@@ -108,7 +108,7 @@ function Navi(args) {
                     className="navlink"
                     href="/"
                   >
-                    FOOD FACTS
+                    SAĞLIKLI YAŞAM
                   </a>
                 </NavItem>
                 <NavItem className="mx-3 py-2">
@@ -117,7 +117,7 @@ function Navi(args) {
                     className="navlink"
                     href="/"
                   >
-                    CONTACT
+                    İLETİŞİM
                   </a>
                 </NavItem>
 

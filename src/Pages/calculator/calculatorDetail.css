@@ -39,13 +39,13 @@ height: auto;
 }
 
 .valueInput { 
-    width: 8ch ; 
-    height: 4ch;
+    width: 6ch ; 
+    height: 5ch;
     text-align: center;
 }
 .valueType{
-    width: 30ch;
-    height: 4ch;
+    width: 32ch;
+    height: 6ch;
     border-style: none;
 }
 select{
@@ -59,7 +59,6 @@ select{
      
 }
 .fullpage{
-    background-color: var(--greyTone2);
     height: auto;
 }
 

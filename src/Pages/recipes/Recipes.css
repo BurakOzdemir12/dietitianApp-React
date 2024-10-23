@@ -28,12 +28,14 @@
 
 /* Header */
 .recipesCol {
-  background-color: var(--blanchedalmond);
+  z-index: 3000;
+  position: relative;
+  /* background-color: var(--blanchedalmond); */
   -webkit-box-shadow: 0 1px 9px 1px rgba(255, 255, 255, 0.1);
-  box-shadow: 0 1px 10px 11px var(--blanchedalmond);
+  /* box-shadow: 0 1px 10px 11px var(--blanchedalmond); */
 }
 .recipes {
-  background-color: blanchedalmond;
+  /* background-color: blanchedalmond; */
   padding: 3%;
   opacity: 0.88;
 }
@@ -50,50 +52,47 @@
 }
 /* check boxes */
 .Check-Boxes {
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.3ch;
-  padding-left: 10%;
-  font-size: 15px;
+  /* padding-left: 6%; */
+  font-size: 17px;
   position: sticky;
-  top: 200;
+  top: 0;
+  color: black;
+}
+input[type="radio"]:checked {
+  background-color: #0d7710; /* Seçildiğinde yeşil ton */
+  transition: background-color 0.3s ease-in-out;
+}
+input[type="radio"] {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: #eee;
+  border-radius: 75%;
+  border: 2px solid #024105;
+  position: relative;
 }
 
+input[type="radio"]:checked::after {
+  /* content: "✔"; */
+  font-size: 18px;
+  position: absolute;
+  top: 0px;
+  left: 4px;
+  color: #4CAF50;
+}
+
+
 /* recipie */
-.dropdown {
-  text-align: center;
-  max-width: 100%;
-}
-.dropdown-toggle {
-  max-width: 60%;
-  width: 80%;
-  margin-bottom: 4ch;
-}
-.fliter {
-  text-align: center;
-  color: #ffffff;
-}
 
 .Check-Boxes {
   position: st;
 }
-.dropdown-menu {
-  /* background-color: #e5345b; */
-  max-width: max-content;
-}
-.filtertext {
-  font-size: 30px;
-  justify-content: center;
-}
+
 .filter-area {
   box-sizing: border-box;
   justify-content: center;
-}
-.filters {
-  display: none;
-
-  background-color: var(--blanchedalmond);
-  -webkit-box-shadow: 0 1px 9px 1px rgba(255, 255, 255, 0.1);
-  box-shadow: 0 1px 10px 11px var(--blanchedalmond);
 }
 
 a {
@@ -116,10 +115,11 @@ a {
     width: 100%;
   }
   /* filter      { display: none; } */
-  .filters2 {
+  /* .filters2 {
     display: none;
-  }
+  } */
 }
+
 @media (max-width: 991px) {
   .recipe-container {
     overflow-y: hidden;

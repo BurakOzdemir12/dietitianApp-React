@@ -1,5 +1,5 @@
 import { Divider, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { urlRecipes } from '../../endpoints';
 import useFetch from '../../hooks/useFetch';
 import { useParams } from 'react-router-dom';
@@ -8,6 +8,24 @@ import PageSkeleton from '../../Components/PageSkeleton';
 const NutritionComponent = () => {
        const { id } = useParams();
        const data = useFetch(`${urlRecipes}/${id}`);
+
+       const [cooktime, setCooktime] = useState(0);
+       const [kcal, setKcal] = useState(0);
+       const [name, setName] = useState('');
+       const [porsionsize, setPorsionsize] = useState(0);
+       const [preparationTime, setPreparationTime] = useState(0);
+       const [totalPorsiongram, setTotalPorsiongram] = useState(0);
+     
+       useEffect(() => {
+         if (data) {
+           setCooktime(data?.data?.cooktime);
+           setKcal(data?.data?.kcal);
+           setName(data?.data?.name);
+           setPorsionsize(data?.data?.porsionsize);
+           setPreparationTime(data?.data?.preparationTime);
+           setTotalPorsiongram(data?.data?.totalPorsiongram);
+         }
+       }, [data]);
        const { loading, error } = useFetch(urlRecipes);
        if (loading) return <PageSkeleton/>;
        if (error){
@@ -45,7 +63,7 @@ const NutritionComponent = () => {
                   Kalori
                   <Typography textAlign="end" variant="h6">
                     {" "}
-                    {setdata.kcal} kcal
+                    {kcal} kcal
                   </Typography>
                 </Typography>
                 <Divider variant="middle" component="" />
@@ -64,7 +82,7 @@ const NutritionComponent = () => {
                   Karbonhidrat
                   <Typography textAlign="end" variant="h6">
                     {" "}
-                    {setdata.kcal} kcal
+                    {kcal} kcal
                   </Typography>
                 </Typography>
 
@@ -83,7 +101,7 @@ const NutritionComponent = () => {
                   Yağ
                   <Typography textAlign="end" variant="h6">
                     {" "}
-                    {setdata.kcal} kcal
+                    {kcal} kcal
                   </Typography>
                 </Typography>
                 <Divider variant="middle" component="" />
@@ -103,7 +121,7 @@ const NutritionComponent = () => {
                   Protein
                   <Typography textAlign="end" variant="h6">
                     {" "}
-                    {setdata.kcal} kcal
+                    {kcal} kcal
                   </Typography>
                 </Typography>
                 <Divider variant="middle" component="" />
@@ -123,7 +141,7 @@ const NutritionComponent = () => {
                   Lif
                   <Typography textAlign="end" variant="h6">
                     {" "}
-                    {setdata.kcal} kcal
+                    {kcal} kcal
                   </Typography>
                 </Typography>
                 <Divider variant="middle" component="" />
@@ -143,7 +161,7 @@ const NutritionComponent = () => {
                   Sodyum
                   <Typography textAlign="end" variant="h6">
                     {" "}
-                    {setdata.kcal} kcal
+                    {kcal} kcal
                   </Typography>
                 </Typography>
                 <Divider variant="middle" component="" />
@@ -163,7 +181,7 @@ const NutritionComponent = () => {
                   Kolestrol
                   <Typography textAlign="end" variant="h6">
                     {" "}
-                    {setdata.kcal} kcal
+                    {kcal} kcal
                   </Typography>
                 </Typography>
                 <Divider variant="middle" component="" />
@@ -183,7 +201,7 @@ const NutritionComponent = () => {
                   Kalori
                   <Typography textAlign="end" variant="h6">
                     {" "}
-                    {setdata.kcal} kcal
+                    {kcal} kcal
                   </Typography>
                 </Typography>
                 <Divider variant="middle" component="" />
@@ -203,7 +221,7 @@ const NutritionComponent = () => {
                   Kalori
                   <Typography textAlign="end" variant="h6">
                     {" "}
-                    {setdata.kcal} kcal
+                    {kcal} kcal
                   </Typography>
                 </Typography>
                 <Divider variant="middle" component="" />
@@ -223,7 +241,7 @@ const NutritionComponent = () => {
                   Kalori
                   <Typography textAlign="end" variant="h6">
                     {" "}
-                    {setdata.kcal} kcal
+                    {kcal} kcal
                   </Typography>
                 </Typography>
                 <Divider

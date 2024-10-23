@@ -6,11 +6,25 @@ export const tokens = (mode) => ({
   ...(mode === "dark"
     ? {
         blanchedalmond: {
-          100: "#705c47",
+          100: "#2b1f1c",
+          200: "#4e342e",
         },
         backGround: {
-              100: "#1b3c36",
-            },
+          100: "#124116",
+          200: "#013220",
+          300: "#013220", // dark green
+          400: "#E1D9D1", //dark white
+          500: "#013220", // dark green
+          600: "#2E3B27", // dark white
+        },
+
+        seashellBackground: {
+          100: "#604743  ",
+          200: "#4e3835 ",
+          300: "#3d2c29  ",
+          400: "#2b1f1c  ",
+          500: "#1a1311 ",
+        },
         grey: {
           100: "#e0e0e0",
           200: "#c2c2c2",
@@ -71,9 +85,21 @@ export const tokens = (mode) => ({
     : {
         blanchedalmond: {
           100: "#ffebcd",
+          200: "#ffebcd",
         },
         backGround: {
           100: "#f5f5e0",
+          200: "#b3efb2",
+          300: "#F9F6EE", //soft white
+          400: "#F9F6EE", //soft white
+          500: "#013220", //Dark Green
+          600: "#F9F6EE", //Soft wWhite
+        },
+        seashellBackground: {
+          100: "#fff5eeeb",
+          200: "#fff5eeeb",
+          300: "#fff5eeeb",
+          400: "#ffebcd", //dark brown
         },
         grey: {
           100: "#141414",
@@ -214,6 +240,11 @@ export const themeSettings = (mode) => {
       h6: {
         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
         fontSize: 14,
+      },
+      h0: {
+        fontFamily: ["Dancing Script", "cursive"].join(","),
+        fontSize: 50,
+        
       },
     },
   };

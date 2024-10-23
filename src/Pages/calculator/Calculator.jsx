@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useContext, useState } from "react";
 
 import {
   Button,
@@ -17,6 +17,8 @@ import useFetch from "../../hooks/useFetch";
 import FoodCard from "../../Components/card/FoodCard";
 import Catlist from "../../Components/CatList/Catlist";
 import { urlFoods } from "../../endpoints";
+import { Typography, useTheme } from "@mui/material";
+import { ColorModeContext, tokens } from "../../theme";
 
 const Calculator = (foods) => {
   const { data, loading } = useFetch(urlFoods);
@@ -25,9 +27,11 @@ const Calculator = (foods) => {
   const onChange = (e) => {
     setQuery(e.target.value);
   };
-
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const colorMode = useContext(ColorModeContext);
   return (
-    <Container fluid>
+    <Container style={{backgroundColor:colors.backGround[400]}} fluid>
       <Row noGutters>
         <Col xs={12} sm={12} md={1} lg={1} xl={1}></Col>
         {/* <div className=""> */}
@@ -40,10 +44,10 @@ const Calculator = (foods) => {
             lg={12}
             xl={12}
           >
-            <h4 className="header mt-3">Calories in Foods</h4>
-            <h5 className=" mt-4" style={{ textAlign: "start" }}>
-              Learn the meals Macro and Micro values you consume.
-            </h5>
+            <Typography sx={{color:colors.backGround[500]}} variant="h1" className="header mt-3">Kalori Hesapla</Typography>
+            <Typography  sx={{color:colors.backGround[500]}} variant="h2" className=" mt-4" style={{ textAlign: "start" }}>
+              Besinlerin Detaylı Besin Değerlerini Öğren 
+            </Typography>
 
             <FormGroup>
               {/* <InputGroup> */}
@@ -113,7 +117,7 @@ const Calculator = (foods) => {
         {/* </div> */}
         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
           <div className="headertwodiv">
-            <h4 className="headertwo"> FOOD CATEGORIES</h4>
+            <h4  className="headertwo"> FOOD CATEGORIES</h4>
           </div>
           <div className="allFood-Categories-List  d-flex flex-wrap  justify-content-center justify-content-md-center">
             <Catlist />

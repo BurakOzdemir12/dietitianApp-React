@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   facts,
   option,
@@ -20,6 +20,10 @@ import { Chart, Doughnut, Pie } from "react-chartjs-2";
 import a from "../../Components/Json/a.json";
 import useFetch from "../../hooks/useFetch";
 import { urlFoods, urlMeasurements } from "../../endpoints";
+import { Box, useTheme } from "@mui/material";
+import { ColorModeContext, tokens } from "../../theme";
+import { motion } from "framer-motion";
+import styled from "styled-components";
 ChartJs.register(Tooltip, Title, ArcElement, Legend);
 
 const Data = {
@@ -39,14 +43,14 @@ const CalculatorDetail = () => {
   const { data, loading } = useFetch(`${urlFoods}/${id}`);
   // console.log(data?.measurements);
 
-  const measurementNames = data?.measurements?.map((measurement) => measurement.name);
-// console.log(measurementNames);
+  const measurementNames = data?.measurements?.map(
+    (measurement) => measurement.name
+  );
+  // console.log(measurementNames);
 
   const [selected, setSelected] = useState(1);
   const [userInput, setUserInput] = useState(1);
   const [TotalGram, setTotalGram] = useState(1);
-
-
 
   const [CalValue, setCalValue] = useState(data?.kcal);
   const [CarbValue, setCarbValue] = useState(data?.carb);
@@ -69,35 +73,37 @@ const CalculatorDetail = () => {
     );
     if (selectedMeasurement) {
       setSelected(selectedMeasurement.amount);
-      const userInputValue = selectedMeasurement.name.toLowerCase() === "gram" ? 100 : 1;
+      const userInputValue =
+        selectedMeasurement.name.toLowerCase() === "gram" ? 100 : 1;
       setUserInput(userInputValue);
       updateResults(selectedMeasurement.amount, userInputValue);
     }
   };
-  
+
   const handleUserInputChange = (e) => {
     setUserInput(e.target.value);
     updateResults(selected, e.target.value);
   };
 
-  
   const updateResults = (selectedAmount, inputValue) => {
     const parsedInputValue = parseFloat(inputValue);
     if (!isNaN(parsedInputValue)) {
       let calculatedValue = parsedInputValue;
-  
+
       // Seçili ölçümün adını bul
       const selectedMeasurement = data?.measurements?.find(
         (measurement) => measurement.amount === selectedAmount
       );
-  
-      // Eğer seçili ölçüm varsa ve adı "gram" ise, çarpma işlemini atla
-      if (selectedMeasurement && selectedMeasurement.name.toLowerCase() === "gram") {
 
+      // Eğer seçili ölçüm varsa ve adı "gram" ise, çarpma işlemini atla
+      if (
+        selectedMeasurement &&
+        selectedMeasurement.name.toLowerCase() === "gram"
+      ) {
       } else {
         calculatedValue = selectedAmount * parsedInputValue;
       }
-  
+
       setCalValue((data?.kcal * calculatedValue) / 100);
       setCarbValue((data?.carb * calculatedValue) / 100);
       setProtValue((data?.protein * calculatedValue) / 100);
@@ -133,48 +139,87 @@ const CalculatorDetail = () => {
     if (data?.measurements && data.measurements.length > 0) {
       const initialMeasurement = data.measurements[0];
       setSelected(initialMeasurement.amount);
-      const userInputValue = initialMeasurement.name.toLowerCase() === "gram" ? 100 : 1;
+      const userInputValue =
+        initialMeasurement.name.toLowerCase() === "gram" ? 100 : 1;
       setUserInput(userInputValue);
       updateResults(initialMeasurement.amount, userInputValue);
     }
   }, [data]);
 
-  // useEffect(() => {
-  //   setCalValue(data?.kcal);
-  //   setCarbValue(data?.carb);
-  //   setProtValue(data?.protein);
-  //   setFatValue(data?.fat);
+  const StyledSelect = styled(motion.select)`
+    appearance: none;
+    background-color: #f0f0f0;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
 
-  //   setFibValue(data?.fibr);
-  //   setColValue(data?.colest);
-  //   setSodValue(data?.sodium);
-  //   setPotasValue(data?.potass);
-  //   setCalsValue(data?.calsium);
-  //   setvitAValue(data?.vitA);
-  //   setvitCValue(data?.vitC);
-  //   setIronValue(data?.iron);
-  // }, [data]);
+    &:hover {
+      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+    }
 
+    &:focus {
+      outline: none;
+      border-color: #a29bfe;
+      box-shadow: 0px 8px 25px rgba(162, 155, 254, 0.6);
+    }
+  `;
+
+  const StyledOption = styled.option`
+    padding: 10px;
+  `;
+
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const colorMode = useContext(ColorModeContext);
   return (
     <div>
       <Row noGutters>
-        <Col xs={12} sm={12} md={0} lg={0} xl={2}></Col>
+        <Col
+          style={{ backgroundColor: colors.backGround[400] }}
+          xs={12}
+          sm={12}
+          md={0}
+          lg={0}
+          xl={2}
+        ></Col>
 
-        <Col xs={12} sm={12} md={12} lg={12} xl={8}>
+        <Col
+          style={{ backgroundColor: colors.backGround[400] }}
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          xl={8}
+        >
           <div className="" style={{ height: "auto" }}>
             <Col xs={12} sm={12} md={10} lg={10} xl={10}>
-              <div className="d-flex  align-items-center">
+              <Box
+                sx={{ "@media(max-width:320px)": {} }}
+                className="  d-inline-flex  align-items-center"
+              >
                 <div className="imgCont d-flex mx-2">
                   <img
-                    className="Pimg px-0"
+                    className="Pimg mt-5 px-0"
                     src={`http://localhost:5149${data?.img}`}
                   />
                 </div>
-                <div className="mx-5">
-                  <h1>{data?.name}</h1>
-                  <span style={{ fontWeight: "bolder" }}>{TotalGram} G</span>
-                </div>
-              </div>
+                <Box className="  ">
+                  <h1 style={{ color: colors.backGround[500] }}>
+                    {data?.name}
+                  </h1>
+                  <span
+                    style={{
+                      color: colors.backGround[500],
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    {TotalGram} G
+                  </span>
+                </Box>
+              </Box>
               <div className="mt-4">
                 <div className="inp d-flex">
                   <div className=" inp d-inline-block">
@@ -188,20 +233,28 @@ const CalculatorDetail = () => {
                     ></Input>
                   </div>
                   <div className="valueType d-flex">
-                    <select onChange={handleSelectedChange}>
-                      {/* {!loading &&
-                        data?.measurements?.map((option, index) => (
-                          <option key={index} value={Object.values(option)[0]}>
-                            {Object.keys(option)[0]}
-                          </option>
-                        ))} */}
-                         {!loading &&
+                    <StyledSelect
+                      initial={{ scale: 0.9 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", stiffness: 150 }}
+                      onChange={handleSelectedChange}
+                    >
+                      {!loading &&
+                        data?.measurements?.map((measurement, index) => (
+                          <StyledOption key={index} value={measurement.amount}>
+                            {measurement.name}
+                          </StyledOption>
+                        ))}
+                    </StyledSelect>
+                    {/* <select onChange={handleSelectedChange}>
+                      
+                      {!loading &&
                         data?.measurements?.map((measurement, index) => (
                           <option key={index} value={measurement.amount}>
                             {measurement.name}
                           </option>
                         ))}
-                    </select>
+                    </select> */}
                   </div>
                 </div>
               </div>
@@ -225,9 +278,17 @@ const CalculatorDetail = () => {
                         style={{ fontWeight: "bolder" }}
                         className=" d-block"
                       >
-                        <CountUp isCounting end={CalValue} duration={1.2} />
+                        <CountUp
+                          style={{ color: colors.backGround[500] }}
+                          isCounting
+                          end={CalValue}
+                          duration={1.2}
+                        />
 
-                        <span> gr</span>
+                        <span style={{ color: colors.backGround[500] }}>
+                          {" "}
+                          gr
+                        </span>
                       </span>
                       <span className="d-block"></span>
                     </div>
@@ -243,8 +304,16 @@ const CalculatorDetail = () => {
                         style={{ fontWeight: "bolder" }}
                         className="d-block"
                       >
-                        <CountUp isCounting end={CarbValue} duration={1.2} />{" "}
-                        <span> gr</span>
+                        <CountUp
+                          style={{ color: colors.backGround[500] }}
+                          isCounting
+                          end={CarbValue}
+                          duration={1.2}
+                        />{" "}
+                        <span style={{ color: colors.backGround[500] }}>
+                          {" "}
+                          gr
+                        </span>
                       </span>
                       <span className="d-block">
                         <span></span>
@@ -261,8 +330,16 @@ const CalculatorDetail = () => {
                         style={{ fontWeight: "bolder" }}
                         className="d-block"
                       >
-                        <CountUp isCounting end={ProtValue} duration={1.2} />{" "}
-                        <span> gr</span>
+                        <CountUp
+                          style={{ color: colors.backGround[500] }}
+                          isCounting
+                          end={ProtValue}
+                          duration={1.2}
+                        />{" "}
+                        <span style={{ color: colors.backGround[500] }}>
+                          {" "}
+                          gr
+                        </span>
                       </span>
                       <span className="d-block">
                         <span></span>
@@ -283,8 +360,16 @@ const CalculatorDetail = () => {
                         style={{ fontWeight: "bolder" }}
                         className="d-block"
                       >
-                        <CountUp isCounting end={FatValue} duration={1.2} />{" "}
-                        <span> gr</span>
+                        <CountUp
+                          style={{ color: colors.backGround[500] }}
+                          isCounting
+                          end={FatValue}
+                          duration={1.2}
+                        />{" "}
+                        <span style={{ color: colors.backGround[500] }}>
+                          {" "}
+                          gr
+                        </span>
                       </span>
                       <span className="d-block">
                         <span></span>
@@ -297,15 +382,41 @@ const CalculatorDetail = () => {
           </div>
         </Col>
 
-        <Col xs={12} sm={12} md={0} lg={0} xl={2}></Col>
+        <Col
+          style={{ backgroundColor: colors.backGround[400] }}
+          xs={12}
+          sm={12}
+          md={0}
+          lg={0}
+          xl={2}
+        ></Col>
 
         <Row noGutters>
-          <Col xs={12} sm={12} md={0} lg={0} xl={2}></Col>
-          <Col xs={12} sm={12} md={12} lg={12} xl={8}>
+          <Col
+            style={{ backgroundColor: colors.backGround[400] }}
+            xs={12}
+            sm={12}
+            md={0}
+            lg={0}
+            xl={2}
+          ></Col>
+          <Col
+            style={{ backgroundColor: colors.backGround[400] }}
+            xs={12}
+            sm={12}
+            md={12}
+            lg={12}
+            xl={8}
+          >
             {" "}
             <div className="fullpage">
-              <h3 className="mx-3 py-5 mt-1">Nutritional Facts</h3>
-              <Table striped>
+              <h3
+                style={{ color: colors.backGround[500] }}
+                className="mx-3 py-5 mt-1"
+              >
+                Nutritional Facts
+              </h3>
+              <Table>
                 <thead>
                   <tr>
                     <th></th>
@@ -412,7 +523,14 @@ const CalculatorDetail = () => {
               </Table>
             </div>
           </Col>
-          <Col xs={12} sm={12} md={0} lg={0} xl={2}></Col>
+          <Col
+            style={{ backgroundColor: colors.backGround[400] }}
+            xs={12}
+            sm={12}
+            md={0}
+            lg={0}
+            xl={2}
+          ></Col>
         </Row>
       </Row>
     </div>

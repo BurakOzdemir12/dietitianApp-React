@@ -9,7 +9,6 @@ import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { colors, IconButton, useTheme } from "@mui/material";
 import { ColorModeContext, tokens } from "../../theme";
 
-
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   padding: theme.spacing(2),
@@ -18,20 +17,20 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const RecipiesCard = ({ items }) => {
-  const theme =useTheme();
-  const colors=tokens(theme.palette.mode);
-  const colorMode=useContext(ColorModeContext);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const colorMode = useContext(ColorModeContext);
   return (
     <Box sx={{ width: "100%", flexGrow: 1 }} className="">
       {" "}
       {/* recipe-grid */}
       <Grid
         container
-        rowSpacing={8}
-        columnSpacing={{ xs: 4, sm: 4, md: 1.4, lg: 1.8, xl: 2.5, xxl: 1 }}
+        rowSpacing={6}
+        columnSpacing={{ xs: 3, sm: 4, md: 1.4, lg: 1.8, xl: 2.5, xxl: 1 }}
       >
         {items.map((item) => (
-          <Grid key={item.id} item xs={12} sm={6} md={4} lg={3} xl={3} xxl={4}>
+          <Grid key={item.id} item xs={6} sm={4} md={4} lg={3} xl={3} xxl={4}>
             <Box
               component="ul"
               sx={{
@@ -45,7 +44,7 @@ const RecipiesCard = ({ items }) => {
               }}
             >
               <Link to={`/recipes/${item.id}`}>
-                <Item sx={{ m: 0, p: 0.4 }}>
+                <Item sx={{ m: 0.5, p: 0.4 }}>
                   <Card
                     component="li"
                     sx={{ minWidth: "100%", minHeight: "100%", flexGrow: 1 }}
@@ -56,12 +55,16 @@ const RecipiesCard = ({ items }) => {
                       alt={item.name}
                       sx={{ height: "100%", width: "100%" }}
                     />
-                    <CardContent>
+                    <CardContent sx={{ background: colors.backGround[500] }}>
                       <Typography
                         variant="h5" // "level" yerine "variant" kullanıyoruz
                         fontWeight="bold" // "fontWeight" ayarını yineledik
-                      sx={{ color:colors.primary[500] }}                   
-                        mt={{ xs: 0, sm: 0, md: 0,lg:0, xl: 0, xxl: 0 }} // margin-top ayarları
+                        sx={{
+                          fontFamily: "sans-serif",
+                          letterSpacing: 0.65,
+                          color: "whitesmoke",
+                        }}
+                        mt={{ xs: 0, sm: 0, md: 0, lg: 0, xl: 0, xxl: 0 }} // margin-top ayarları
                       >
                         {item.name}
                       </Typography>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import {
   Col,
@@ -16,11 +16,15 @@ import RecipesCategories from "../../Components/RecipesCategories/RecipesCategor
 import RecipeCategoriesReview from "../../Components/RecipeCategoriesReview/RecipeCategoriesReview";
 import { urlRecipes, urlRecipesCategories, urlWeather } from "../../endpoints";
 import RecipiesCard from "../../Components/card/RecipiesCard";
-import { Box } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
+import { ColorModeContext, tokens } from "../../theme";
 
 const Recipes = ({ direction, ...args }) => {
-  const {data,loading,error}=useFetch(urlRecipesCategories)
-  
+  const { data, loading, error } = useFetch(urlRecipesCategories);
+
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const colorMode = useContext(ColorModeContext);
 
   const [selectedCheckboxes, setSelectedCheckBoxes] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -40,92 +44,114 @@ const Recipes = ({ direction, ...args }) => {
 
   return (
     <div>
-      <Col className="recipesCol" xs={12} sm={12} md={12} lg={12} xl={12}>
+      <Col
+        className="recipesCol"
+        style={{
+          backgroundColor: colors.seashellBackground[400],
+          boxShadow:
+            theme.palette.mode === "dark"
+              ? "0px 1px 10px 11px #2b1f1c" // Karanlık tema için gölge
+              : "0px 1px 10px 11px #ffebcd", // Açık tema için gölge
+        }}
+        xs={12}
+        sm={12}
+        md={12}
+        lg={12}
+        xl={12}
+      >
         <div className="recipes ">
           <h5 className="">RECIPES</h5>
         </div>
       </Col>
 
       <Row noGutters>
-        <Col noGutters xs={12} sm={12} md={12} lg={2} xl={2}>
+        <Col
+          style={{ marginTop: 0, backgroundColor: colors.backGround[400] }}
+          noGutters
+          xs={12}
+          sm={12}
+          md={12}
+          lg={2}
+          xl={2}
+        >
           <Form className="">
-            <section className="  mt-1  recipe-filters ">
-              <Dropdown
-                className="filters   "
-                // ref={menuRef}
-                isOpen={dropdownOpen}
-                toggle={toggle}
-                direction={direction}
-                type="radio"
-              >
-                <DropdownToggle caret>
-                  <div className="fliter  ">
-                    <span className="filtertext  ">Filter</span>
-                  </div>
+            <Box
+              display="grid"
+              gridTemplateColumns="repeat(12,minmax(0,1fr))"
+              gridAutoRows="30px"
+              noGutters
+              className="Check-Boxes    mx-0 recipe-filters "
+              sx={{
+                "@media(max-width: 992px)": {
+                  mx: 0,
+                  paddingLeft: 3,
+                },
+                "@media(min-width: 992px)": {
+                  paddingLeft: "6%",
+                  mt:5
+                },
+              }}
+            >
+              {/* <RecipesCategories /> */}
+              {data.map((item) => (
+                <Box
+                  gridColumn="span 4"
+                  gridRow="span 2"
+                  sx={{
+                    "@media (max-width: 425px)": {
+                      gridColumn: "span 6",
+                      gridRow: "span 3",
+                      justifyItems: "start",
+                    },
+                    "@media (min-width:992px)": {
+                      gridColumn: "span 12",
+                      gridRow: "span 3",
+                    },
+                  }}
+                >
+                  <div
+                    class=" form-check"
+                    categoryValue={item.id}
+                    data_filter="all"
+                  >
+                    <br />
 
-                  <DropdownMenu {...args}>
-                    {data.map((cat) => (
-                      <DropdownItem toggle>
-                        <div
-                          class="mt-4 form-check"
-                          categoryValue={cat.name}
-                        >
-                          {" "}
-                          <input
-                            type="radio"
-                            class=" form-check-input"
-                            id="anime"
-                            name="hobby"
-                          />
-                          <label class="form-check-label" for="anime">
-                            {cat.name}
-                          </label>
-                        </div>
-                      </DropdownItem>
-                    ))}
-                    {/* ------------------------------------------------------------------ */}
-                  </DropdownMenu>
-                </DropdownToggle>
-              </Dropdown>
-            </section>
-
-            <section className="Check-Boxes mt-5  mx-3 recipe-filters row">
-              <div className="full">
-                <div className="desk-des">
-                  <div className="filters2">
-                    {/* <RecipesCategories /> */}
-                    {data.map((item) => (
-                      <div
-                        class=" form-check"
-                        categoryValue={item.id}
-                        data_filter="all"
-                      >
-                        <br />
-
-                        <input
-                          onChange={handleCheckBox}
-                          type="radio"
-                          class=" form-check-input"
-                          id="anime"
-                          value={item.id}
-                          name="hobby"
-                          // checked="ALL"
-                        />
-                        <label class="form-check-label" for="anime">
-                          <div key={item.id}>{item.name}</div>
-                        </label>
+                    <input
+                      onChange={handleCheckBox}
+                      type="radio"
+                      class=" form-check-input"
+                      id="anime"
+                      value={item.id}
+                      name="hobby"
+                      // checked="ALL"
+                    />
+                    <label
+                      class="form-check-label  custom-radio-label"
+                      for="anime"
+                    >
+                      <div className="mt-1 mx-1" key={item.id}>
+                        {item.name}
                       </div>
-                    ))}{" "}
+                    </label>
                   </div>
-                </div>
-              </div>
-            </section>
+                </Box>
+              ))}{" "}
+            </Box>
           </Form>
         </Col>
-        <Col noGutters className="" xs={12} sm={12} md={12} lg={10} xl={10}>
-          <Box className="  mt-5 mb-5 " sx={{height:"100%",width:"100%"}}>
+        <Col
+          style={{ marginTop: 0, backgroundColor: colors.backGround[400] }}
+          noGutters
+          className=""
+          xs={12}
+          sm={12}
+          md={12}
+          lg={10}
+          xl={10}
+        >
+          <Box className="  mt-5 mb-5 " sx={{ height: "100%", width: "100%" }}>
             {/* <RecipiesCard/> */}
-            
+
             <RecipeCategoriesReview selected={selectedCheckboxes} />
           </Box>
 

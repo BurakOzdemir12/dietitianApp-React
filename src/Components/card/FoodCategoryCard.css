@@ -9,14 +9,14 @@
 }
 .title {
   font-weight: 600;
-  color: rgba(88, 152, 248, 0.829);
+  /* color: rgba(88, 152, 248, 0.829); */
+  color: rgb(2, 59, 2);
   margin-top: 4%;
 }
 @media (min-width: 1200px) {
   .CategoryCard {
     max-width: 15%;
-    text-align: center;
-    justify-items: center;
+   
 }
 .categoryImage {
     min-width: 100%;
