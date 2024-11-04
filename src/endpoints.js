@@ -9,3 +9,5 @@ export const urlFoods =`${baseURL}/api/Food`;
 export const urlFoodsCategories =`${baseURL}/api/FoodCategory`;
 
 export const urlMeasurements =`${baseURL}/api/Measurements`;
+
+export const urlBlogs =`${baseURL}/api/Blog`;

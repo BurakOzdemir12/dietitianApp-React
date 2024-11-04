@@ -14,7 +14,6 @@ import CalculatorDetail from "../Pages/calculator/CalculatorDetail";
 import RecipesDetail from "../Pages/recipes/RecipesDetail";
 
 
-import Details from "../Pages/calculator/Details";
 import Recipes from "../Pages/recipes/Recipes";
 
 import CategoryFoods from "../Components/CategoryFoods/CategoryFoods";
@@ -22,7 +21,8 @@ import ChatBot from "../Components/ChatBot/ChatBot";
 import { ColorModeContext ,useMode} from "../theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import PageSkeleton from "../Components/PageSkeleton";
-
+import Blog from "../Pages/blog/Blog";
+import Deneme from "../Pages/Deneme";
 
 
 
@@ -42,13 +42,17 @@ function App() {
           <Route path="/" Component={Home} />
           <Route exact path="/home" Component={Home} />
 
+          <Route exact path="/blog" Component={Blog} />
+
           <Route path="/recipes" Component={Recipes} />
           <Route path="/recipes/:id" Component={RecipesDetail} />
       
           <Route path="/Calculator" Component={Calculator} />
           <Route path="/Calculator/:id"  Component={CalculatorDetail} />
 
-          <Route path="/details/:id" Component={Details} />
+          <Route path="/deneme" Component={Deneme} />
+
+
           <Route path="/catitems/:id" Component={CategoryFoods} />
           <Route path="/s" Component={PageSkeleton} />
 

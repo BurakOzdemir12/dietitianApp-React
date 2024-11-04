@@ -237,6 +237,10 @@ export const themeSettings = (mode) => {
         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
         fontSize: 16,
       },
+      h50: {
+        fontFamily: ["Georgia"].join(","),
+        fontSize: 16,
+      },
       h6: {
         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
         fontSize: 14,

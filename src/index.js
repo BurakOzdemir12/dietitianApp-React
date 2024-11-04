@@ -9,8 +9,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, RouterProvider } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+
   <BrowserRouter>
   <App />
 </BrowserRouter>

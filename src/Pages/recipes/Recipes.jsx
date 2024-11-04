@@ -43,7 +43,7 @@ const Recipes = ({ direction, ...args }) => {
   };
 
   return (
-    <div>
+    <Box>
       <Col
         className="recipesCol"
         style={{
@@ -159,7 +159,7 @@ const Recipes = ({ direction, ...args }) => {
         </Col>{" "}
         {/*container end */}
       </Row>
-    </div>
+    </Box>
   );
 };
 

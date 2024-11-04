@@ -64,10 +64,22 @@ function Navi(args) {
             expand="xl"
             {...args}
           >
+            {theme.palette.mode === "dark" ? (
+              <NavbarToggler
+                style={{ backgroundColor: colors.backGround[400] }}
+                className="justify-center"
+                onClick={toggle}
+              />
+            ) : (
+              <NavbarToggler
+              style={{ backgroundColor: colors.backGround[100] }}
+              className=" justify-center" onClick={toggle} />
+            )}
             <NavbarBrand className="brand" href="/home">
               <img height={110} width={220} src={brand}></img>
             </NavbarBrand>
-            <NavbarToggler className="mx-5" onClick={toggle} />
+            
+
             <Collapse isOpen={isOpen} navbar>
               <Nav className=" nav mt-4 mx-auto" navbar>
                 <NavItem className="mx-3 py-2">
@@ -106,7 +118,7 @@ function Navi(args) {
                   <a
                     style={{ color: colors.greenAccent[200] }}
                     className="navlink"
-                    href="/"
+                    href="/blog"
                   >
                     SAĞLIKLI YAŞAM
                   </a>

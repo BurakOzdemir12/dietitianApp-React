@@ -58,7 +58,7 @@ const Calculator = (foods) => {
                   name="text"
                   type="text"
                   className="InputArea  mt-5"
-                  placeholder="Search For Foods"
+                  placeholder="Besin-Yemek Ara"
                   onChange={onChange}
                 />
                 {/* <Button

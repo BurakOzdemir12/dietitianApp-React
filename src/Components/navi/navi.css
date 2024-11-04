@@ -11,11 +11,11 @@ body {
   padding: 0;
   margin: 0;
 }
-.brand{display: inline-block;}
-.brand {
-}
+.brand{display: inline-flex;}
+
 .navbar-toggler {
   display: block;
+  
 }
 .navv{
   
@@ -148,13 +148,13 @@ body {
 } */
 @media screen and (max-width: 320px) {
   .brand {
-    max-width: 34%;
+    max-width: 30%;
     height: auto;
   }
 }
 @media screen and (max-width: 420px) {
   .brand {
-    max-width: 50%;
+    max-width: 100%;
     height: auto;
   }
 }

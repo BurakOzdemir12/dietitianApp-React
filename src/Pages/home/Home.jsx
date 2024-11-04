@@ -96,7 +96,7 @@ const Home = () => {
         onEnter={() => setCounterOn(true)}
         onExit={() => setCounterOn(false)}
       >
-        <Col style={{ backgroundColor: colors.backGround[300] }}>
+        <Col   style={{ paddingTop:55,paddingBottom:55,  backgroundColor: colors.backGround[300] }}>
           <Container maxWidth="xxl">
             <Row noGutters>
               <Col xs={12} sm={12} md={6} lg={6} xl={6}>

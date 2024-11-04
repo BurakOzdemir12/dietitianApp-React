@@ -5,7 +5,9 @@ import {
   products,
 } from "../../Components/Json/NutritionalItems";
 import { useParams } from "react-router-dom";
-import { Col, Dropdown, DropdownItem, Input, Row, Table } from "reactstrap";
+import Table from "@mui/material/Table";
+
+import { Col, Dropdown, DropdownItem, Input, Row } from "reactstrap";
 import "../calculator/calculatorDetail.css";
 import CountUp from "react-countup";
 
@@ -20,23 +22,24 @@ import { Chart, Doughnut, Pie } from "react-chartjs-2";
 import a from "../../Components/Json/a.json";
 import useFetch from "../../hooks/useFetch";
 import { urlFoods, urlMeasurements } from "../../endpoints";
-import { Box, useTheme } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  MenuItem,
+  Paper,
+  Select,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { ColorModeContext, tokens } from "../../theme";
-import { motion } from "framer-motion";
+import { color, motion } from "framer-motion";
 import styled from "styled-components";
 ChartJs.register(Tooltip, Title, ArcElement, Legend);
-
-const Data = {
-  labels: ["% Carb", " % Protein", " % Fat"],
-  datasets: [
-    {
-      label: "",
-      data: [21, 45, 98],
-      backgroundColor: ["#008b8b", "rgb(255, 99, 132)", "rgb(255, 205, 86)"],
-      hoverOffset: 1,
-    },
-  ],
-};
 
 const CalculatorDetail = () => {
   const { id } = useParams();
@@ -121,6 +124,7 @@ const CalculatorDetail = () => {
       clearResults();
     }
   };
+
   const clearResults = () => {
     setCalValue("");
     setCarbValue("");
@@ -135,6 +139,7 @@ const CalculatorDetail = () => {
     setvitCValue("");
     setIronValue("");
   };
+
   useEffect(() => {
     if (data?.measurements && data.measurements.length > 0) {
       const initialMeasurement = data.measurements[0];
@@ -146,30 +151,49 @@ const CalculatorDetail = () => {
     }
   }, [data]);
 
-  const StyledSelect = styled(motion.select)`
-    appearance: none;
-    background-color: #f0f0f0;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 16px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
+  const macro = ProtValue + CarbValue + FatValue;
+  const protPercent = ((ProtValue / macro) * 100).toFixed(0);
+  const carbPercent = ((CarbValue / macro) * 100).toFixed(0);
+  const fatPercent = ((FatValue / macro) * 100).toFixed(0);
+  console.log(macro);
+  const Data = {
+    labels: ["% Karbonhidrat", " % Protein", " % Yağ"],
+    datasets: [
+      {
+        label: "",
+        data: [carbPercent, protPercent, fatPercent],
+        backgroundColor: ["#008b8b", "rgb(255, 99, 132)", "rgb(255, 205, 86)"],
+        hoverOffset: 1,
+      },
+    ],
+  };
 
-    &:hover {
-      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
-    }
+  // if you want the use the styled select and option you can use this code down below
+  // const StyledSelect = styled(motion.select)`
+  //   appearance: none;
+  //   background-color: #f0f0f0;
+  //   border: 2px solid #ddd;
+  //   border-radius: 10px;
+  //   padding: 10px;
+  //   font-size: 16px;
+  //   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  //   transition: box-shadow 0.3s ease;
 
-    &:focus {
-      outline: none;
-      border-color: #a29bfe;
-      box-shadow: 0px 8px 25px rgba(162, 155, 254, 0.6);
-    }
-  `;
+  //   &:hover {
+  //     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  //   }
 
-  const StyledOption = styled.option`
-    padding: 10px;
-  `;
+  //   &:focus {
+  //     outline: none;
+  //     border-color: #a29bfe;
+  //     box-shadow: 0px 8px 25px rgba(162, 155, 254, 0.6);
+  //   }
+  // `;
+
+  // const StyledOption = styled.option`
+  //   padding: 10px;
+  // `;
+  const [isFocused, setIsFocused] = useState(false);
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -216,7 +240,7 @@ const CalculatorDetail = () => {
                       fontWeight: "bolder",
                     }}
                   >
-                    {TotalGram} G
+                    {TotalGram} Gr
                   </span>
                 </Box>
               </Box>
@@ -229,32 +253,91 @@ const CalculatorDetail = () => {
                       type="text"
                       placeholder={"100"}
                       maxLength={4}
-                      className=" mx-2 valueInput"
+                      className={`mx-2 valueInput ${
+                        isFocused ? "focused" : ""
+                      }`}
+                      onFocus={() => setIsFocused(true)}
+                      onBlur={() => setIsFocused(false)}
                     ></Input>
                   </div>
                   <div className="valueType d-flex">
-                    <StyledSelect
+                    {/* <StyledSelect
                       initial={{ scale: 0.9 }}
                       animate={{ scale: 1 }}
                       transition={{ type: "spring", stiffness: 150 }}
-                      onChange={handleSelectedChange}
+                      onChange={(e) => handleSelectedChange(e)}
                     >
                       {!loading &&
                         data?.measurements?.map((measurement, index) => (
-                          <StyledOption key={index} value={measurement.amount}>
+                          <StyledOption
+                           key={index} value={measurement.amount}>
                             {measurement.name}
                           </StyledOption>
                         ))}
                     </StyledSelect>
-                    {/* <select onChange={handleSelectedChange}>
-                      
-                      {!loading &&
-                        data?.measurements?.map((measurement, index) => (
-                          <option key={index} value={measurement.amount}>
-                            {measurement.name}
-                          </option>
-                        ))}
-                    </select> */}
+                    */}
+                    <motion.div
+                      initial={{ scale: 0.9 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", stiffness: 150 }}
+                    >
+                      <FormControl fullWidth>
+                        <Select
+                          value={selected}
+                          onChange={handleSelectedChange}
+                          sx={{
+                            color: "black",
+                            backgroundColor: "whitesmoke",
+                            borderRadius: "10px",
+                            boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
+                            "&:hover": {
+                              boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+                            },
+                            "&.Mui-focused": {
+                              borderColor: "#a29bfe",
+                              boxShadow:
+                                "0px 8px 25px rgba(162, 155, 254, 0.6)",
+                            },
+                          }}
+                        >
+                          {!loading &&
+                            data?.measurements?.map((measurement, index) => (
+                              <MenuItem
+                                sx={{
+                                  backgroundColor:
+                                    selected === measurement.amount
+                                      ? "#a29bfe"
+                                      : "white",
+                                  color:
+                                    selected === measurement.amount
+                                      ? "black"
+                                      : "black",
+                                  "&:hover": {
+                                    backgroundColor: "#f0f0f0",
+                                  },
+                                  "&.Mui-selected": {
+                                    backgroundColor: "#e0e0e0 !important",
+                                    color: "black",
+                                  },
+                                  "&.Mui-selected:hover": {
+                                    backgroundColor: "#d0d0d0",
+                                  },
+                                }}
+                                key={index}
+                                value={measurement.amount.toString()}
+                              >
+                                <Typography
+                                  variant="h5"
+                                  sx={{ color: colors.primary[500] }}
+                                >
+                                  {" "}
+                                  {measurement.name}
+                                </Typography>
+                              </MenuItem>
+                            ))}
+                        </Select>
+                      </FormControl>
+                    </motion.div>
                   </div>
                 </div>
               </div>
@@ -409,118 +492,127 @@ const CalculatorDetail = () => {
             xl={8}
           >
             {" "}
-            <div className="fullpage">
+            <div className="mx-5 fullpage">
               <h3
-                style={{ color: colors.backGround[500] }}
+                style={{ fontWeight: "bold", color: colors.backGround[500] }}
                 className="mx-3 py-5 mt-1"
               >
-                Nutritional Facts
+                Besin Değerleri
               </h3>
-              <Table>
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th> </th>
-                    <th>100 gr</th>
-                    <th>
-                      {" "}
-                      <CountUp isCounting end={TotalGram} duration={1.2} /> gr
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Carbohydrates (g) </th>
-                    <td></td>
-                    <td>{data?.attributes?.carb}</td>
-                    <td>
-                      <CountUp isCounting end={CarbValue} duration={1.2} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Protein (g)</th>
-                    <td></td>
-                    <td>{data?.attributes?.protein}</td>
-                    <td>
-                      {" "}
-                      <CountUp isCounting end={ProtValue} duration={1.2} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Fat (g)</th>
-                    <td></td>
-                    <td>{data?.attributes?.fat}</td>
-                    <td>
-                      <CountUp isCounting end={FatValue} duration={1.2} />
-                    </td>
-                  </tr>
 
-                  <tr>
-                    <th scope="row">Fibre (g)</th>
-                    <td></td>
-                    <td>{data?.attributes?.fibr} </td>
-                    <td>
-                      <CountUp isCounting end={FibrValue} duration={1.2} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">cholesterol (mg)</th>
-                    <td></td>
-                    <td>{data?.attributes?.colest}</td>
-                    <td>
-                      <CountUp isCounting end={ColestValue} duration={1.2} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Sodium (mg)</th>
-                    <td></td>
-                    <td>{data?.attributes?.sodium}</td>
-                    <td>
-                      <CountUp isCounting end={SodiumValue} duration={1.2} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Potassium (mg)</th>
-                    <td></td>
-                    <td>{data?.potassium}</td>
-                    <td>
-                      <CountUp isCounting end={potassiumValue} duration={1.2} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Calcium (mg)</th>
-                    <td></td>
-                    <td>{data?.attributes?.calsium}</td>
-                    <td>
-                      <CountUp isCounting end={CalsValue} duration={1.2} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Vitamin A (iu)</th>
-                    <td></td>
-                    <td>{data?.attributes?.vitA}</td>
-                    <td>
-                      <CountUp isCounting end={vitAValue} duration={1.2} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Vitamin C (mg)</th>
-                    <td></td>
-                    <td>{data?.attributes?.vitC}</td>
-                    <td>
-                      <CountUp isCounting end={vitCValue} duration={1.2} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Iron</th>
-                    <td></td>
-                    <td>{data?.attributes?.iron}</td>
-                    <td>
-                      <CountUp isCounting end={IronValue} duration={1.2} />
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
+              <TableContainer
+                component={Paper}
+                sx={{
+                  boxShadow: "0px 0px 26px 20px rgba(179,179,179,1)",
+                  mb: 5,
+                  backgroundColor: colors.backGround[600],
+                }}
+              >
+                <Table aria-label="nutrition table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>
+                        {" "}
+                        <Typography variant="h3" fontWeight={700}>
+                          {" "}
+                          {data?.name}{" "}
+                        </Typography>
+                      </TableCell>
+                      <TableCell></TableCell>
+                      <TableCell align="right">
+                        <Typography fontWeight={600} variant="h4">
+                          100 gr
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography fontWeight={600} variant="h4">
+                          <CountUp isCounting end={TotalGram} duration={1.2} />{" "}
+                          gr
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {[
+                      {
+                        name: "Carbohydrates (g)",
+                        value: CarbValue,
+                        dataValue: data?.carb,
+                      },
+                      {
+                        name: "Protein (g)",
+                        value: ProtValue,
+                        dataValue: data?.protein,
+                      },
+                      {
+                        name: "Fat (g)",
+                        value: FatValue,
+                        dataValue: data?.fat,
+                      },
+                      {
+                        name: "Fibre (g)",
+                        value: FibrValue,
+                        dataValue: data?.fibr,
+                      },
+                      {
+                        name: "Cholesterol (mg)",
+                        value: ColestValue,
+                        dataValue: data?.colest,
+                      },
+                      {
+                        name: "Sodium (mg)",
+                        value: SodiumValue,
+                        dataValue: data?.sodium,
+                      },
+                      {
+                        name: "Potassium (mg)",
+                        value: potassiumValue,
+                        dataValue: data?.potassium,
+                      },
+                      {
+                        name: "Calcium (mg)",
+                        value: CalsValue,
+                        dataValue: data?.calsium,
+                      },
+                      {
+                        name: "Vitamin A (iu)",
+                        value: vitAValue,
+                        dataValue: data?.vitA,
+                      },
+                      {
+                        name: "Vitamin C (mg)",
+                        value: vitCValue,
+                        dataValue: data?.vitC,
+                      },
+                      { name: "Iron", value: IronValue, dataValue: data?.iron },
+                    ].map((row, index) => (
+                      <TableRow key={index}>
+                        <TableCell component="th" scope="row">
+                          <Typography variant="h6" fontWeight={600}>
+                            {row.name}
+                          </Typography>
+                        </TableCell>
+                        <TableCell></TableCell>
+                        <TableCell align="right">
+                          <Typography fontWeight="bold">
+                            {row.dataValue}
+                          </Typography>
+                        </TableCell>
+                        <TableCell align="right">
+                          <Typography fontWeight="bold">
+                            {" "}
+                            <CountUp
+                              isCounting
+                              end={row.value}
+                              duration={1.2}
+                            />
+                          </Typography>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </div>
           </Col>
           <Col
