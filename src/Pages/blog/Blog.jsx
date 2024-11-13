@@ -7,7 +7,7 @@ import {
   InputBase,
   useTheme,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import BlogCard from "../../Components/blog/BlogCard";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -21,19 +21,93 @@ import { ColorModeContext, tokens } from "../../theme";
 
 import blogimg from "../../Components/images/products/SALMON_large.png";
 import Header from "../../Components/Header";
+import {
+  urlBlogCategories,
+  urlBlogconnectionBlogCategories,
+  urlBlogs,
+} from "../../endpoints";
+import useFetch from "../../hooks/useFetch";
+import BlogCategory from "../../Components/blog/BlogCategory";
 
-const Blog = ({search,setSearch}) => {
-  const handleSearchChange = (event) => {
-    setSearch(event.target.value);
-  };
-  
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const handleCategory = (category) => {
-    setSelectedCategory(category);
-  };
+const Blog = () => {
+  const { data, loading, error } = useFetch(urlBlogs);
+
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [allBlogs, setAllBlogs] = useState([]);
+
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
+
+  const [lastPublishedBlog, SetLastPublish] = useState(null);
+  const [datee, SetDate] = useState(null);
+  useEffect(() => {
+    if (data && data.length > 0) {
+      setAllBlogs(data);
+      setFilteredBlogs(data);
+      const currentDate = new Date();
+      const nearestDate = data.reduce((prev, current) => {
+        const prevDate = new Date(prev.date);
+        const currDate = new Date(current.date);
+
+        return Math.abs(currDate - currentDate) <
+          Math.abs(prevDate - currentDate)
+          ? current
+          : prev;
+      });
+      SetLastPublish(nearestDate);
+      SetDate(new Date(nearestDate.date));
+    }
+  }, [data]);
+  let filteredDate = "";
+
+  if (datee) {
+    // `null` check
+    const day = datee.getDate();
+    const month = datee.getMonth() + 1;
+    const year = datee.getFullYear();
+    filteredDate = `${day}.${month}.${year}`;
+  }
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
+
+  useEffect(() => {
+    const applyFilters = async () => {
+      let filteredData = allBlogs;
+
+      if (selectedCategory !== "all") {
+        // Eğer bir kategori seçiliyse, API'den ilgili blogları getir
+        try {
+          const response = await fetch(
+            `${urlBlogconnectionBlogCategories}/${selectedCategory}`
+          );
+          if (response.ok) {
+            filteredData = await response.json();
+          } else {
+            console.error("Veri alınırken hata oluştu.");
+          }
+        } catch (error) {
+          console.error("Kategoriye göre blogları alırken hata oluştu:", error);
+        }
+      }
+
+      // Arama işlemi
+      if (search.trim() !== "") {
+        filteredData = filteredData.filter((blog) =>
+          blog.name.toLowerCase().includes(search.toLowerCase())
+        );
+      }
+
+      setFilteredBlogs(filteredData);
+    };
+
+    applyFilters();
+  }, [selectedCategory, search, allBlogs]);
+
+  const handleCategoryChange = (categoryId) => {
+    setSelectedCategory(categoryId === "all" ? null : categoryId); // "Hepsi" seçildiğinde kategori sıfırlanır
+    setSearch(""); // Yeni kategori seçildiğinde arama sıfırlanır
+  };
   return (
     <Box
       sx={{
@@ -57,7 +131,7 @@ const Blog = ({search,setSearch}) => {
         {/* Last submitted Card */}
         <Box
           justifySelf="center"
-          maxWidth="75%"
+          maxWidth="100%"
           sx={{
             mb: 15,
             "@media (max-width:1024px)": {
@@ -65,281 +139,136 @@ const Blog = ({search,setSearch}) => {
             },
           }}
         >
-          <Card
-            sx={{
-              backgroundColor: colors.backGround[300],
-
-              mb: 10,
-              mt: 2,
-              "@media (min-width:768px)": {
-                display: "flex",
-              },
-            }}
-          >
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <CardContent sx={{ flex: "1 0 auto" }}>
-                <Typography fontWeight={700} mb={2} variant="h3">
-                  Live From Space
-                </Typography>
-                <Typography
-                  letterSpacing={1}
-                  variant="h50"
-                  sx={{ opacity: 0.9, color: "dark" }}
-                >
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Pariatur necessitatibus illo corrupti incidunt error? Eaque
-                  beatae inventore laboriosam fuga dicta similique eum
-                  reiciendis, animi repellat deleniti sint odio ducimus expedita
-                  non explicabo rem ipsam! Temporibus velit cupiditate amet
-                  voluptate libero autem, perspiciatis voluptatum corrupti,
-                  cumque assumenda veritatis quaerat deleniti! Veniam,
-                  perspiciatis vitae quidem suscipit aspernatur numquam minus
-                  recusandae cum blanditiis a aliquid adipisci incidunt! Esse
-                  perspiciatis, odit harum repellat obcaecati, officia sed cum
-                  qui laudantium, sequi aut velit officiis consectetur.
-                </Typography>
-              </CardContent>
-              <Box sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}>
-                <Button
-                  style={{
-                    color: colors.primary[100],
-                  }}
-                  className="  Readmore mt-0  mx-2"
-                >
-                  {" "}
-                  Read More
-                </Button>
-              </Box>
-            </Box>
-            <Box
+          {lastPublishedBlog && (
+            <Card
               sx={{
-                alignContent: "center",
-                minWidth: "45%",
+                backgroundColor: colors.backGround[300],
+
+                mb: 10,
+                mt: 2,
+                "@media (min-width:768px)": {
+                  display: "flex",
+                },
               }}
             >
-              <CardMedia
-                component="img"
+              <Box
                 sx={{
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                  p: 1,
-                  width: "100%",
+                  "@media (max-width:767px)": {
+                    maxWidth: "100%",
+                  },
+                  minWidth: "50%",
+                  maxWidth: "50%",
+                  display: "flex",
+                  flexDirection: "column",
                 }}
-                image={blogimg}
-                alt="L"
-              />
-            </Box>
-          </Card>
+              >
+                <CardContent sx={{ flex: "1 0 auto" }}>
+                  <Typography fontWeight={700} mb={2} variant="h3">
+                    {lastPublishedBlog.name}
+                  </Typography>
+                  <Typography variant="body1">{filteredDate}</Typography>
+                  <Typography
+                    letterSpacing={1}
+                    variant="h50"
+                    sx={{ opacity: 0.9, color: "dark" }}
+                  >
+                    {lastPublishedBlog.description}
+                  </Typography>
+                </CardContent>
+                <Box
+                  sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}
+                >
+                  <Button
+                    style={{
+                      color: colors.primary[100],
+                    }}
+                    className="  Readmore mt-0  mx-2"
+                  >
+                    {" "}
+                    Read More
+                  </Button>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  alignContent: "center",
+                  justifyItems: "center",
+                  maxWidth: "100%",
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  sx={{
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    p: 1,
+                    maxWidth: "100%",
+                    height: "100%",
+                    "@media (min-width:1024px)": {
+                      maxWidth: "75%",
+                    },
+                    "@media (max-width:767px)": {
+                      height: "75%",
+                      width: "75%",
+                    },
+                    "@media (max-width:820px)": {
+                      maxHeight: "80%",
+                    },
+                    "@media (max-width:445px)": {
+                      height: "100%",
+                      width: "100%",
+                    },
+                  }}
+                  image={`http://localhost:5149${lastPublishedBlog.img}` || ""}
+                  alt="L"
+                />
+              </Box>
+            </Card>
+          )}
         </Box>
-        <Box
-          sx={{
-            gridTemplateColumns: "repeat(12,minmax(0,1fr))",
-            gridAutoRows: "40px",
-            display: "grid",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#013220",
-            paddingBottom: 5,
-            paddingTop: 5,
-            width: "100%",
-            height: "100%",
-            mb: 7,
-            "@media (max-width: 440px)": {
-              display: "inline-flex",
-              flexDirection: "column",
-
-            },
-          }}
-        >
-          <InputBase
-          value={search}
-          onChange={handleSearchChange}
-            placeholder="Yazı Ara..."
-            sx={{
-              "@media (max-width: 1024px)": {
-               width: "82%",
-              },
-              // opacity: 0.8,
-              ".MuiInputBase-input": {
-                marginLeft: 2,
-              },
-              "&:placeholder":{
-                mx: 5,
-                color: "black",
-              },
-              fontSize: 20, 
-              justifySelf:"center",
-              width: "50%",
-              gridColumn: "span 12",
-              gridRow: "span 3",
-              color: "black",
-              backgroundColor: "#E1D9D1",
-            }}
-          />
-          <Button
-            onclick={() => handleCategory("all")}
-            sx={{
-              
-              gridColumn: "span 2",
-              gridRow: "span 2",
-              "@media ()": {},
-              mx: 2,
-              textTransform: "none",
-              "&:hover": {
-                backgroundColor: "#E1D9D1",
-                color: "black",
-              },
-            }}
-          >
-            <Typography
-              sx={{
-                "&:hover": {
-                  color: "black",
-                },
-              }}
-              color="white"
-              variant="h4"
-            >
-              Hepsi
-            </Typography>
-          </Button>
-          <Button
-            sx={{
-              
-              gridColumn: "span 2",
-              gridRow: "span 2",
-              textTransform: "none",
-              "&:hover": {
-                backgroundColor: "#E1D9D1",
-              },
-            }}
-          >
-            <Typography
-              sx={{
-                "&:hover": {
-                  color: "black",
-                },
-              }}
-              color="white"
-              variant="h5"
-            >
-              Kilo Verme
-            </Typography>
-          </Button>
-          <Button
-            sx={{
-              gridColumn: "span 2",
-              gridRow: "span 2",
-              textTransform: "none",
-              "&:hover": {
-                backgroundColor: "#E1D9D1",
-              },
-            }}
-          >
-            <Typography
-              sx={{
-                "&:hover": {
-                  color: "black",
-                },
-              }}
-              color="white"
-              variant="h5"
-            >
-              Sağlıklı Beslenme
-            </Typography>
-          </Button>
-          <Button
-            sx={{
-              gridColumn: "span 2",
-              gridRow: "span 2",
-              textTransform: "none",
-              "&:hover": {
-                backgroundColor: "#E1D9D1",
-              },
-            }}
-          >
-            <Typography
-              sx={{
-                "&:hover": {
-                  color: "black",
-                },
-              }}
-              color="white"
-              variant="h5"
-            >
-              Fitness ve Exersiz
-            </Typography>
-          </Button>
-          <Button
-            sx={{
-              gridColumn: "span 2",
-              gridRow: "span 2",
-              textTransform: "none",
-              "&:hover": {
-                backgroundColor: "#E1D9D1",
-              },
-            }}
-          >
-            <Typography
-              sx={{
-                "&:hover": {
-                  color: "black",
-                },
-              }}
-              color="white"
-              variant="h5"
-            >
-              Psikoloji ve Disiplin
-            </Typography>
-          </Button>
-        </Box>
+        <BlogCategory
+          search={search}
+          setSearch={setSearch}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={handleCategoryChange}
+        />
 
         <Box
           sx={{
             backgroundColor: colors.backGround[400],
+            gap: 2,
+            padding: 2,
+            "@media (max-width: 425px)": {
+              gridAutoRows:"minmax(110px, auto)"
+
+                  },
           }}
           display="grid"
           gridTemplateColumns="repeat(12,minmax(0,1fr))"
-          gridAutoRows="180px"
+          gridAutoRows="minmax(150px, auto)"
           nogutters
         >
-          <Box
-            mx={1}
-            gridColumn="span 4"
-            gridRow="span 3"
-            sx={{
-              "@media (max-width:1024px)": {
-                gridColumn: "span 4",
-                gridRow: "span 3",
-              },
-              "@media (max-width: 425px)": {
-                gridColumn: "span 12",
-                gridRow: "span 3",
-              },
-            }}
-          >
-            <BlogCard />
-          </Box>
-          <Box
-            mx={1}
-            gridColumn="span 4"
-            gridRow="span 3"
-            sx={{
-              "@media (max-width:1024px)": {
-                gridColumn: "span 4",
-                gridRow: "span 3",
-              },
-              "@media (max-width: 425px)": {
-                gridColumn: "span 12",
-                gridRow: "span 3",
-              },
-            }}
-          >
-            <BlogCard
-            search={search}
-            selectedCategory={selectedCategory}
-            />
-          </Box>
+          {filteredBlogs &&
+            filteredBlogs.map((item) => (
+              <Box
+                key={item.id}
+                mx={1}
+                gridColumn="span 4"
+                gridRow="span 3"
+                sx={{
+                  "@media (max-width:1024px)": {
+                    gridColumn: "span 6",
+                    gridRow: "span 3",
+                  },
+                  "@media (max-width: 425px)": {
+                    gridColumn: "span 12",
+                    gridRow: "span 3",
+                  },
+                }}
+              >
+                <BlogCard blogs={item} />
+              </Box>
+            ))}
         </Box>
       </Container>
     </Box>

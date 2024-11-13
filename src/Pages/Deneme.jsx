@@ -52,11 +52,11 @@ const Deneme = () => {
   };
   //descriptionu html e çevirip almana yarıcak id sini girilen useparamsa göre yapılandırılacak
   useEffect(() => {
-    if (data && data[7].description) {
-      setDescription(data[7]?.description); // description alanını state'e atıyoruz
+    if (data && data[0].description) {
+      setDescription(data[0]?.description); // description alanını state'e atıyoruz
     }
   }, [data]);
-  //     console.log(content);
+      console.log(content);
 
   const handleSubmit = async () => {
     const datab = { name: "deneme", description: content, img: "" };
@@ -67,11 +67,13 @@ const Deneme = () => {
       console.log("kayıt işlemi sırasında hata oluştu", error);
     }
   };
+
+  
   // console.log(data[1].description);
 
   ///
   return (
-    <Box height="100%">
+    <Box height="auto">
       {/* {data.map((item) => (
         <Box key={item.id}>
           <h1>{item.name}</h1>
@@ -83,12 +85,13 @@ const Deneme = () => {
       <Button onClick={handleSubmit} disabled={loading}>
         Kaydet
       </Button>
-      <Box>
-        <Container maxWidth="xl">
-          {" "}
-          <Box dangerouslySetInnerHTML={{ __html: description }} />
-        </Container>
-      </Box>
+      <Container maxWidth="xl">
+        {" "}
+        {/* {data.map((item)=>(
+            <h4>{item.description}</h4>
+          ))} */}
+        <Box dangerouslySetInnerHTML={{ __html: description }}></Box>
+      </Container>
     </Box>
   );
 };

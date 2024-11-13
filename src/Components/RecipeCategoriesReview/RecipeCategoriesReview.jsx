@@ -23,7 +23,7 @@ console.log(recipes)
   return (
     <>
     
-      <RecipiesCard items={filteredRecipes} />
+      <RecipiesCard  items={filteredRecipes} />
     </>
   );
 };

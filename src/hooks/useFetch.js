@@ -24,7 +24,7 @@ const useFetch = (endpoint) => {
         setError(err);
         
            <PageSkeleton/>
-            window.location.reload()
+            // window.location.reload()
       
         
         console.log(err);

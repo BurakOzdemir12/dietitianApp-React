@@ -11,3 +11,5 @@ export const urlFoodsCategories =`${baseURL}/api/FoodCategory`;
 export const urlMeasurements =`${baseURL}/api/Measurements`;
 
 export const urlBlogs =`${baseURL}/api/Blog`;
+export const urlBlogCategories =`${baseURL}/api/BlogCategory`;
+export const urlBlogconnectionBlogCategories =`${baseURL}/api/BlogbetweenBCategory/GetBlogsByCategory`;

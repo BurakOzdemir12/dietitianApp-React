@@ -29,7 +29,7 @@ import "froala-editor/js/third_party/image_tui.min.js";
 import { Box } from "@mui/material";
 import { urlBlogs } from "../endpoints";
 
-const FrolaEditor = ({ content, setModel }) => {
+const FrolaEditor = ({ content, setModel,blogId }) => {
 
   const handleModelChange = (newContent) => {
        setModel(newContent); // Üst bileşene içeriği aktar
@@ -56,19 +56,17 @@ const FrolaEditor = ({ content, setModel }) => {
         'imageManager', 'inlineStyle', 'lineBreaker', 'link', 'lists', 'paragraphFormat',
         'paragraphStyle', 'quote', 'save', 'table', 'url', 'video', 'wordPaste'
       ],
-      imageUpload: true,
-      imageUploadURL: `${urlBlogs}/upload`,
-//       charCounterCount: true,
-//     toolbarInline: false,
-      imageUploadMethod: 'POST',
-      imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif', 'webp'],
-      videoUpload: true,
+      // imageUpload: true,
+      // imageUploadURL: `${urlBlogs}/uploads/blog`,
+      // imageUploadMethod: 'POST',
+      // imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif', 'webp'],
+      // videoUpload: true,
     }}
   />
-  <div style={{ marginTop: '20px' }}>
+  {/* <div style={{ marginTop: '20px' }}>
     <h3>Güncel İçerik:</h3>
-    {/* <Box maxWidth={"100%"} dangerouslySetInnerHTML={{ __html: content }} /> */}
-  </div>
+    <Box maxWidth={"100%"} dangerouslySetInnerHTML={{ __html: content }} />
+  </div> */}
 </div>
 };
 
