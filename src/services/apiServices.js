@@ -6,6 +6,20 @@ const axiosInstance = axios.create({
   },
 });
 
+//USDA FOODS API 
+export const fetchUSDAFoods = async (query) => {
+  const apiKey = process.env.REACT_APP_USDA_FOOD_DATA_API_KEY; // API Key'i .env dosyasından alıyoruz
+  const url = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${query}&api_key=${apiKey}`;
+
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching USDA foods:", error);
+    throw error;
+  }
+};
+
 export const fetchData = async (endpoint) => {
   try {
     const response = await axiosInstance.get(endpoint);

@@ -46,18 +46,20 @@ const Home = () => {
         <Col
           id="about"
           style={{
-            maxHeight: "145ch",
+            maxHeight: "auto",
+            maxWidth: "100%",
             backgroundColor: colors.seashellBackground[400],
           }}
-          className="  gx-5  about"
+          className="  gx-5  "
+          
           xs={12}
           sm={12}
-          md={8}
+          md={12}
           lg={7}
           xl={8}
         >
           <h6 className=" dot mx-5 ">.</h6>
-          <h4 className="hello  mx-5  py-5 px-1">
+          <h4 className=" hello  mx-5  py-5 px-1">
             Diyetisyen <br /> Sena Selen Baki
           </h4>
           <p className="abouttext mx-4 mt-2">
@@ -72,7 +74,7 @@ const Home = () => {
             style={{
               color: colors.primary[100],
             }}
-            className="  Readmore mt-3  mx-5"
+            className="  Readmore mt-3 mb-2 mx-5"
           >
             {" "}
             Read More
@@ -80,14 +82,17 @@ const Home = () => {
         </Col>
 
         <Col
-          style={{ maxHeight: "145ch" }}
+        
+          style={{ maxHeight: "165ch" }}
           xs={12}
           sm={12}
-          md={12}
+          md={10}
           lg={5}
           xl={4}
         >
-          <img className="img2" src={dietetician}></img>
+          <img className="img2" style={{
+           
+          }} src={dietetician}></img>
         </Col>
       </Row>
 

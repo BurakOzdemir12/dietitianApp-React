@@ -56,11 +56,7 @@ const FrolaEditor = ({ content, setModel,blogId }) => {
         'imageManager', 'inlineStyle', 'lineBreaker', 'link', 'lists', 'paragraphFormat',
         'paragraphStyle', 'quote', 'save', 'table', 'url', 'video', 'wordPaste'
       ],
-      // imageUpload: true,
-      // imageUploadURL: `${urlBlogs}/uploads/blog`,
-      // imageUploadMethod: 'POST',
-      // imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif', 'webp'],
-      // videoUpload: true,
+      imageUpload: false,
     }}
   />
   {/* <div style={{ marginTop: '20px' }}>

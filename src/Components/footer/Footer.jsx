@@ -23,19 +23,19 @@ function Footer() {
     },
   };
   return (
-    <div>
+    <div className="">
       <Row  noGutters>
         <Col
           style={{ backgroundColor: colors.seashellBackground[400] }}
-          className="about"
-          xs={2}
+          className="footer"
+          xs={12}
           sm={3}
-          md={6}
+          md={12}
           lg={6}
           xl={6}
         >
-          <h4 className="aboutHeader mt-5">Contact Me</h4>
-          <p className="aboutText mt-4">Come! Lets Burn Calories Together</p>
+          <h4 className="aboutHeader mt-5">İletişime Geç</h4>
+          <p className="aboutText mt-4">Sağlıklı Yaşamdan Haberdar Olmak İçin Sen de Gel</p>
 
           <div className="formField mt-5">
             <input
@@ -53,21 +53,21 @@ function Footer() {
           </div>
           <div className="formField">
             <Button  type="submit" className="submit mt-4 mb-5  ">
-              Submit
+              Gönder
             </Button>
           </div>
         </Col>
         <Col
           style={{ backgroundColor: colors.seashellBackground[400] }}
-          className="about"
-          xs={2}
-          sm={3}
-          md={3}
+          className="footer"
+          xs={12}
+          sm={6}
+          md={6}
           lg={3}
           xl={3}
         >
           <div>
-            <h5 class="fw-dark mt-5 ">Links</h5>
+            <h5 class="fw-dark mt-5 ">Linkler</h5>
             <ul class="list-unstyled   ">
               <div>
                 <li class="my-3">
@@ -76,7 +76,7 @@ function Footer() {
                     href="/home"
                     class=" text-decoration-none "
                   >
-                    <span className="">Home</span>
+                    <span className="">Ana Sayfa</span>
                   </a>
                 </li>
               </div>
@@ -86,7 +86,7 @@ function Footer() {
                   href=""
                   class=" text-decoration-none "
                 >
-                  <span>ABOUT</span>
+                  <span>Kimim Ben?</span>
                 </a>
               </li>
               <li  class="my-3">
@@ -95,7 +95,7 @@ function Footer() {
                   href=""
                   class=" text-decoration-none "
                 >
-                  <span>CALORIE CALCULATOR</span>
+                  <span>Kalori Hesapla</span>
                 </a>
               </li>
               <li  class="my-3">
@@ -104,7 +104,7 @@ function Footer() {
                   href=""
                   class=" text-decoration-none"
                 >
-                  <span>RECIPES</span>
+                  <span>Yemek Tarifleri</span>
                 </a>
               </li>
               <li  class="my-3">
@@ -113,7 +113,7 @@ function Footer() {
                   href=""
                   class=" text-decoration-none "
                 >
-                  <span>BLOGS</span>
+                  <span>Blog</span>
                 </a>
               </li>
               <li  class="my-1">
@@ -122,10 +122,10 @@ function Footer() {
                   href=""
                   class=" text-decoration-none "
                 >
-                  <span>CONTACT</span>
+                  <span>İletişime Geç</span>
                 </a>
               </li>
-              <li style={liComponent} class="my-3">
+              {/* <li style={liComponent} class="my-3">
                 <a
                   style={liComponent}
                   href=""
@@ -133,16 +133,16 @@ function Footer() {
                 >
                   <span>MEDIA</span>
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </Col>
         <Col
           style={{ backgroundColor: colors.seashellBackground[400] }}
-          className="about"
-          xs={2}
-          sm={3}
-          md={3}
+          className="footer"
+          xs={12}
+          sm={6}
+          md={6}
           lg={3}
           xl={3}
         >

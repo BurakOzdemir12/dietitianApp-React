@@ -23,6 +23,10 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import PageSkeleton from "../Components/PageSkeleton";
 import Blog from "../Pages/blog/Blog";
 import Deneme from "../Pages/Deneme";
+import Test from "../Pages/Test";
+import Login from "../auth/Login";
+import SignUp from "../auth/SignUp";
+import Anim from "../Components/Animations/authAnimation/Anim";
 
 
 
@@ -39,6 +43,9 @@ function App() {
         <ChatBot/>
         
         <Routes>
+          <Route path="/login" Component={Login} />
+          <Route path="/a" Component={Anim} />
+          <Route path="/signup" Component={SignUp} />
           <Route path="/" Component={Home} />
           <Route exact path="/home" Component={Home} />
 
@@ -51,6 +58,7 @@ function App() {
           <Route path="/Calculator/:id"  Component={CalculatorDetail} />
 
           <Route path="/deneme" Component={Deneme} />
+          <Route path="/test" Component={Test} />
 
 
           <Route path="/catitems/:id" Component={CategoryFoods} />

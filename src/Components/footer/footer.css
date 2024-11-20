@@ -25,9 +25,7 @@
   --Playfairdisplay: "Playfair Display", serif;
   --lato: "Lato", sans-serif;
 }
-.about {
-  /* background-color: var(--seashell); */
-  height: auto;
+.footer {
   text-align: center;
 }
 .aboutHeader {

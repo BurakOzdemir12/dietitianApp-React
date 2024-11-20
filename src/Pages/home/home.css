@@ -36,11 +36,14 @@ body {
   height: 108.5ch;
 }
 .abouttext {
+  text-align: center;
+
   opacity: 0.7;
   font-family: var(--robotoslab);
   font-size: 2.23ch;
 }
 .hello  {
+  text-align: center;
   font-family: var(--dancingscript);
   font-size: 7.3ch;
 }
@@ -103,11 +106,12 @@ body {
   background-repeat: no-repeat;
 }
 .img2 {
-  max-height: 100%;
-  object-fit: scale-down;
+  /* max-height: 100%; */
+  object-fit: contain;
   max-width: 100%;
   background-repeat: no-repeat;
   background-size: 100%;
+  max-height: 100%;
 }
 /* Counter */
 .CounterHeader {
@@ -147,10 +151,7 @@ body {
 }
 @media (max-width: 964px) {
   /* tablet, landscape iPad, lo-res laptops ands desktops */
-  .about {
-    width: 100%;
-    height: auto;
-  }
+ 
 }
 @media (min-width: 964px) {
   /* tablet, landscape iPad, lo-res laptops ands desktops */
@@ -174,9 +175,7 @@ body {
 }
 @media (max-width: 320px) {
   /* smartphones, iPhone, portrait 480x320 phones */
-  .about {
-    min-height: 102ch;
-  }
+ 
   .hello{
     font-size: 5ch;
   }

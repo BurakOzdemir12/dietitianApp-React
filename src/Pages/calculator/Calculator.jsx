@@ -1,4 +1,4 @@
-import React, { Component, useContext, useState } from "react";
+import React, { Component, useContext, useEffect, useState } from "react";
 
 import {
   Button,
@@ -19,10 +19,15 @@ import Catlist from "../../Components/CatList/Catlist";
 import { urlFoods } from "../../endpoints";
 import { Typography, useTheme } from "@mui/material";
 import { ColorModeContext, tokens } from "../../theme";
+import { fetchUSDAFoods } from "../../services/apiServices";
 
 const Calculator = (foods) => {
-  const { data, loading } = useFetch(urlFoods);
-  // console.log(data);
+  // const { data, loading } = useFetch(urlFoods);
+  const { data: localData, loading: localLoading } = useFetch(urlFoods);
+  const [usdaFoods, setUsdaFoods] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const [value, setQuery] = useState("");
   const onChange = (e) => {
     setQuery(e.target.value);
@@ -30,8 +35,50 @@ const Calculator = (foods) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
+
+  useEffect(() => {
+    if (value) {
+      const fetchUSDAData = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+          const data = await fetchUSDAFoods(value);
+          setUsdaFoods(data.foods || []);
+        } catch (error) {
+          setError("USDA data fetch error: " + error.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchUSDAData();
+    } else {
+      setUsdaFoods([]);
+    }
+  }, [value]);
+
+  const filteredLocalData = localData?.filter((item) => {
+    const searchTerm = value.toLowerCase();
+    const name = item.name.toLowerCase();
+    return searchTerm && name.startsWith(searchTerm);
+  });
+
+  const filteredUSDAData = usdaFoods?.filter((item) => {
+    const searchTerm = value.toLowerCase().trim();
+    const name = item.description.toLowerCase().replace(/,/g, ""); 
+    return (
+      searchTerm &&
+      name.includes(searchTerm) && 
+      item.foodMeasures &&
+      item.foodMeasures.length > 0
+    );
+  });
+  
+  
+  
+  console.log(filteredLocalData);
+  console.log(filteredUSDAData);
   return (
-    <Container style={{backgroundColor:colors.backGround[400]}} fluid>
+    <Container style={{ backgroundColor: colors.backGround[400] }} fluid>
       <Row noGutters>
         <Col xs={12} sm={12} md={1} lg={1} xl={1}></Col>
         {/* <div className=""> */}
@@ -44,9 +91,20 @@ const Calculator = (foods) => {
             lg={12}
             xl={12}
           >
-            <Typography sx={{color:colors.backGround[500]}} variant="h1" className="header mt-3">Kalori Hesapla</Typography>
-            <Typography  sx={{color:colors.backGround[500]}} variant="h2" className=" mt-4" style={{ textAlign: "start" }}>
-              Besinlerin Detaylı Besin Değerlerini Öğren 
+            <Typography
+              sx={{ color: colors.backGround[500] }}
+              variant="h1"
+              className="header mt-3"
+            >
+              Kalori Hesapla
+            </Typography>
+            <Typography
+              sx={{ color: colors.backGround[500] }}
+              variant="h2"
+              className=" mt-4"
+              style={{ textAlign: "start" }}
+            >
+              Besinlerin Detaylı Besin Değerlerini Öğren
             </Typography>
 
             <FormGroup>
@@ -67,8 +125,34 @@ const Calculator = (foods) => {
                   >
                     Search
                   </Button> */}
+                {[...(filteredLocalData || []), ...(filteredUSDAData || [])]
+                  .slice(0, 5)
+                  .map((product) => (
+                    <ul className="ul-l" style={{ textDecoration: "none" }}>
+                      <li className=" mx-3 listItem">
+                        <Link
+                          key={product.id || product.fdcId}
+                          to={`/Calculator/${product?.id || product.fdcId}`}
+                        >
+                          <div className="d-inline">
+                            {product.img ? (
+                              <img
+                                className="mx- me-2"
+                                src={`http://localhost:5149${product.img}`}
+                                style={{ height: 55 }}
+                                alt={product.name || product.description}
+                              />
+                            ) : (
+                              <span></span> //if there is no image, render an empty span
+                            )}
+                          </div>
+                          <span>{product.name || product.description}</span>
+                        </Link>
+                      </li>
+                    </ul>
+                  ))}
 
-                {data
+                {/* {data
                   ?.filter((item) => {
                     const searchTerm = value.toLowerCase();
                     const name = item.name.toLowerCase();
@@ -92,9 +176,8 @@ const Calculator = (foods) => {
                           <span>{product.name}</span>
                         </Link>
                       </li>
-                      {/* // <h1>{product.category}</h1> */}
                     </ul>
-                  ))}
+                  ))} */}
               </div>
               {/* </InputGroup> */}
             </FormGroup>
@@ -104,7 +187,7 @@ const Calculator = (foods) => {
               <h4 style={{ color: "black", fontWeight: "600", opacity: 0.7 }}>
                 Most Searched Foods
               </h4>
-              {data?.slice(0, 5).map((item) => (
+              {localData?.slice(0, 5).map((item) => (
                 <div className=" mt-5 Card">
                   <div className="Product">
                     <FoodCard key={item.id} foods={item} />
@@ -117,7 +200,7 @@ const Calculator = (foods) => {
         {/* </div> */}
         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
           <div className="headertwodiv">
-            <h4  className="headertwo"> FOOD CATEGORIES</h4>
+            <h4 className="headertwo"> FOOD CATEGORIES</h4>
           </div>
           <div className="allFood-Categories-List  d-flex flex-wrap  justify-content-center justify-content-md-center">
             <Catlist />
